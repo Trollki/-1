@@ -155,6 +155,21 @@
       color: #5a1417;
       user-select: text;
     }
+    .copy-link-button {
+      background: #c1272d;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+      display: inline-block;
+    }
+    .copy-link-button:hover {
+      background: #a10005;
+    }
     img, video, iframe {
       width: 100%;
       border-radius: 14px;
@@ -322,7 +337,7 @@
       id: 'news1',
       title: "ЗСУ відбили напад на Лисичанськ: деталі",
       date: "2025-07-13",
-      tags: ["війна", "ЗСУ", "Лисичанськ"],
+      tags: ["Надзвичайне", "Політика", "Культура", "Освіта"],
       text: `Збройні сили України успішно відбили спробу прориву ворога у напрямку Лисичанська. У боях загинули понад 15 окупантів, наші воїни понесли незначні втрати. Позиції міцно утримуються, противник зазнає значних втрат у техніці.\n\nКомандування підкреслює важливість цієї перемоги для подальшого звільнення Донбасу.`,
       media: {
         type: "image",
@@ -334,7 +349,7 @@
       id: 'news2',
       title: "Путін наказав вивезти цінне обладнання з заводу в Харкові",
       date: "2023-05-20",
-      tags: ["війна", "Харків", "СБУ"],
+      tags: ["Економіка", "Інфраструктура", "Екологія", "МОЗ"],
       text: `Російське командування здійснило спробу евакуації стратегічного обладнання з заводу "Електромаш" у Харкові. Частину техніки було вивезено, проте більшість залишилась завдяки оперативності СБУ та місцевих партизан.\n\nЦей випадок свідчить про постійний тиск на українську промисловість з боку агресора.`,
       media: {
         type: "video",
@@ -345,7 +360,7 @@
       id: 'news3',
       title: "Новий закон про кібербезпеку в Україні: що зміниться",
       date: "2023-05-25",
-      tags: ["кібербезпека", "політика", "закон"],
+      tags: ["Технології", "Політика", "Фільми", "Освіта"],
       text: `Верховна Рада ухвалила закон, який посилює захист державних інформаційних систем та критичної інфраструктури від кібератак. Закон передбачає жорсткі санкції для порушників та створення спеціального центру реагування.\n\nЕксперти відзначають, що це важливий крок для зміцнення нацбезпеки у цифрову епоху.`,
       media: null
     }
@@ -361,6 +376,20 @@
   const allTags = [...new Set(newsData.flatMap(news => news.tags))];
   let selectedTag = null;
 
+  // Перевірка, чи сторінка завантажена в обмеженому контексті (наприклад, about:srcdoc)
+  const isRestrictedContext = window.location.origin === 'null' || window.location.href.startsWith('about:srcdoc');
+
+  // Функція для копіювання посилання
+  function copyNewsLink(newsId) {
+    const url = isRestrictedContext ? `?news=${newsId}` : `${window.location.origin}${window.location.pathname}?news=${newsId}`;
+    navigator.clipboard.writeText(url).then(() => {
+      alert('Посилання скопійовано!');
+    }).catch(err => {
+      console.error('Помилка копіювання:', err);
+      alert('Не вдалося скопіювати посилання.');
+    });
+  }
+
   // Функція для створення фільтру тегів
   function renderTagFilter() {
     tagFilter.innerHTML = '';
@@ -371,6 +400,9 @@
       selectedTag = null;
       renderTagFilter();
       renderNews();
+      if (!isRestrictedContext) {
+        history.pushState({}, '', window.location.pathname);
+      }
     });
     tagFilter.appendChild(allButton);
 
@@ -382,6 +414,9 @@
         selectedTag = tag;
         renderTagFilter();
         renderNews();
+        if (!isRestrictedContext) {
+          history.pushState({}, '', window.location.pathname);
+        }
       });
       tagFilter.appendChild(button);
     });
@@ -395,7 +430,13 @@
     filteredNews.forEach(news => {
       const newsEl = document.createElement('article');
       newsEl.classList.add('news-item');
-      newsEl.addEventListener('click', () => showNewsPage(news.id));
+      newsEl.addEventListener('click', (e) => {
+        if (e.target.classList.contains('copy-link-button')) return;
+        showNewsPage(news.id);
+        if (!isRestrictedContext) {
+          history.pushState({}, '', `?news=${news.id}`);
+        }
+      });
 
       const title = document.createElement('h2');
       title.className = 'news-title';
@@ -420,12 +461,18 @@
 
       const text = document.createElement('p');
       text.className = 'news-text';
-      text.textContent = news.text.split('\n')[0] + '...'; // Показуємо лише перший абзац
+      text.textContent = news.text.split('\n')[0] + '...';
+
+      const copyButton = document.createElement('button');
+      copyButton.className = 'copy-link-button';
+      copyButton.textContent = 'Копіювати посилання';
+      copyButton.addEventListener('click', () => copyNewsLink(news.id));
 
       newsEl.appendChild(title);
       newsEl.appendChild(date);
       newsEl.appendChild(tags);
       newsEl.appendChild(text);
+      newsEl.appendChild(copyButton);
 
       if (news.media) {
         if (news.media.type === 'image') {
@@ -470,12 +517,17 @@
       ${news.media ? (news.media.type === 'image' ? 
         `<img src="${news.media.src}" alt="${news.media.alt || 'Новина'}">` : 
         `<video controls src="${news.media.src}"></video>`) : ''}
+      <button class="copy-link-button">Копіювати посилання</button>
       <a href="#" class="back-button">Повернутися до новин</a>
     `;
 
+    newsPage.querySelector('.copy-link-button').addEventListener('click', () => copyNewsLink(news.id));
     newsPage.querySelector('.back-button').addEventListener('click', e => {
       e.preventDefault();
       showHome();
+      if (!isRestrictedContext) {
+        history.pushState({}, '', window.location.pathname);
+      }
     });
   }
 
@@ -499,11 +551,17 @@
     newsPage.style.display = 'none';
     linkHome.classList.remove('active');
     linkAbout.classList.add('active');
+    if (!isRestrictedContext) {
+      history.pushState({}, '', window.location.pathname);
+    }
   }
 
   linkHome.addEventListener('click', e => {
     e.preventDefault();
     showHome();
+    if (!isRestrictedContext) {
+      history.pushState({}, '', window.location.pathname);
+    }
   });
 
   linkAbout.addEventListener('click', e => {
@@ -511,8 +569,33 @@
     showAbout();
   });
 
-  // Ініціалізація
-  showHome();
+  // Перевірка URL для відображення конкретної новини при завантаженні
+  window.addEventListener('load', () => {
+    if (isRestrictedContext) {
+      showHome();
+      return;
+    }
+    const params = new URLSearchParams(window.location.search);
+    const newsId = params.get('news');
+    if (newsId && newsData.some(n => n.id === newsId)) {
+      showNewsPage(newsId);
+    } else {
+      showHome();
+    }
+  });
+
+  // Обробка зміни стану історії
+  if (!isRestrictedContext) {
+    window.addEventListener('popstate', () => {
+      const params = new URLSearchParams(window.location.search);
+      const newsId = params.get('news');
+      if (newsId && newsData.some(n => n.id === newsId)) {
+        showNewsPage(newsId);
+      } else {
+        showHome();
+      }
+    });
+  }
 </script>
 
 </body>
