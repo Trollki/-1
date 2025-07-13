@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ЗМІ 1+1 — Новини</title>
+  <title>ЗМІ 1+1 — Новини України</title>
   <style>
     /* Скидання і базові стилі */
     * {
@@ -11,162 +11,190 @@
     }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f7f9fc;
-      color: #333;
+      background: #fff;
+      color: #2b2b2b;
       margin: 0;
       padding: 0 15px 40px;
-      max-width: 900px;
+      max-width: 960px;
       margin-left: auto;
       margin-right: auto;
-      line-height: 1.6;
+      line-height: 1.65;
+      background: #fff;
     }
+
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: #004085;
-      padding: 15px 20px;
+      background-color: #c1272d; /* яскраво-червоний */
+      padding: 18px 25px;
       color: white;
-      border-radius: 0 0 10px 10px;
-      margin-bottom: 30px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      border-radius: 0 0 14px 14px;
+      margin-bottom: 36px;
+      box-shadow: 0 5px 15px rgb(193 39 45 / 0.55);
       position: sticky;
       top: 0;
       z-index: 1000;
+      user-select: none;
     }
+
     header .logo {
       font-weight: 900;
-      font-size: 1.9em;
-      letter-spacing: 1.2px;
+      font-size: 2.0em;
+      letter-spacing: 2px;
+      font-family: 'Arial Black', Arial, sans-serif;
       cursor: default;
-      user-select: none;
+      text-shadow: 0 0 5px #6d0000cc;
     }
+
     nav a {
-      color: #a8c7ff;
+      color: #ffe8e9;
       text-decoration: none;
-      margin-left: 25px;
-      font-weight: 600;
-      font-size: 1.1em;
-      padding: 6px 12px;
-      border-radius: 6px;
-      transition: background-color 0.25s ease, color 0.25s ease;
+      margin-left: 28px;
+      font-weight: 700;
+      font-size: 1.15em;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, color 0.3s ease;
       cursor: pointer;
-      user-select: none;
     }
     nav a:hover {
-      background-color: #2a69ac;
-      color: #fff;
+      background-color: #ffe8e9;
+      color: #c1272d;
+      font-weight: 800;
+      box-shadow: 0 0 12px #c1272daa;
     }
     nav a.active {
-      background-color: #fcd535;
-      color: #004085;
-      font-weight: 700;
-      box-shadow: 0 0 8px #fcd535aa;
+      background-color: #fff;
+      color: #c1272d;
+      font-weight: 900;
+      box-shadow: 0 0 18px #c1272dcc;
     }
 
     /* Новини */
     #newsContainer {
       display: flex;
       flex-direction: column;
-      gap: 25px;
+      gap: 30px;
+      margin-bottom: 60px;
     }
     .news-item {
-      background: white;
-      padding: 20px 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 14px rgb(0 0 0 / 0.07);
-      transition: transform 0.15s ease;
+      background: #fff6f6;
+      padding: 28px 32px;
+      border-radius: 16px;
+      box-shadow: 0 7px 20px rgb(193 39 45 / 0.15);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: 2px solid #c1272d44;
+      user-select: none;
     }
     .news-item:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgb(0 0 0 / 0.12);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px rgb(193 39 45 / 0.3);
+      border-color: #c1272dbb;
     }
     .news-title {
-      font-size: 1.55em;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: #002752;
+      font-size: 1.7em;
+      font-weight: 900;
+      margin-bottom: 8px;
+      color: #a10005;
+      text-shadow: 1px 1px 3px #f5c0c0cc;
+      user-select: text;
     }
     .news-date {
-      font-size: 0.9em;
-      color: #6c757d;
-      margin-bottom: 14px;
+      font-size: 1em;
+      color: #a13639;
+      margin-bottom: 20px;
       font-style: italic;
+      user-select: text;
     }
     .news-text {
-      font-size: 1.1em;
-      margin-bottom: 16px;
+      font-size: 1.15em;
+      margin-bottom: 22px;
       white-space: pre-line;
-      color: #222;
+      color: #5a1417;
+      user-select: text;
     }
     img, video, iframe {
       width: 100%;
-      border-radius: 10px;
-      margin-bottom: 18px;
-      max-height: 400px;
+      border-radius: 14px;
+      margin-bottom: 22px;
+      max-height: 420px;
       object-fit: cover;
+      user-select: none;
+      box-shadow: 0 5px 15px rgb(193 39 45 / 0.25);
     }
 
     /* Сторінка "Про нас" */
     #aboutPage {
       display: none;
-      background: white;
-      padding: 25px 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgb(0 0 0 / 0.08);
-      line-height: 1.7;
+      background: #fff6f6;
+      padding: 28px 32px;
+      border-radius: 18px;
+      box-shadow: 0 7px 25px rgb(193 39 45 / 0.2);
+      line-height: 1.75;
+      color: #5a1417;
+      user-select: text;
     }
     #aboutPage h1 {
-      font-size: 2.2em;
-      margin-bottom: 15px;
-      color: #003366;
-      border-bottom: 3px solid #fcd535;
-      padding-bottom: 8px;
-      font-weight: 800;
+      font-size: 2.6em;
+      margin-bottom: 22px;
+      color: #a10005;
+      border-bottom: 4px solid #c1272d;
+      padding-bottom: 12px;
+      font-weight: 900;
+      user-select: text;
+      text-shadow: 1px 1px 4px #f5c0c0cc;
     }
     #aboutPage p {
-      font-size: 1.1em;
-      margin-bottom: 20px;
-      color: #444;
+      font-size: 1.18em;
+      margin-bottom: 22px;
+      line-height: 1.6;
+      user-select: text;
+    }
+    #aboutPage strong {
+      color: #8b0000;
     }
     #aboutPage .highlight {
-      background: #fcd535;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-weight: 700;
-      color: #004085;
+      background: #c1272d;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-weight: 800;
+      box-shadow: 0 0 12px #c1272dcc;
+      user-select: none;
       display: inline-block;
-      margin-bottom: 20px;
-      box-shadow: 0 0 12px #fcd535aa;
+      margin-bottom: 30px;
     }
 
     /* Адаптивність */
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
       body {
-        padding: 0 10px 30px;
+        padding: 0 12px 30px;
+        max-width: 100%;
       }
       header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
+        gap: 12px;
+        padding: 16px 20px;
       }
       nav a {
         margin-left: 0;
         margin-right: 15px;
-        font-size: 1em;
-        padding: 8px 14px;
+        font-size: 1.1em;
+        padding: 10px 16px;
       }
       .news-item {
-        padding: 15px 18px;
+        padding: 20px 24px;
       }
       .news-title {
-        font-size: 1.3em;
+        font-size: 1.4em;
       }
       #aboutPage h1 {
-        font-size: 1.8em;
+        font-size: 2em;
       }
       #aboutPage p {
-        font-size: 1em;
+        font-size: 1.05em;
       }
     }
   </style>
@@ -189,105 +217,132 @@
 <!-- Про нас -->
 <div id="aboutPage">
   <h1>Про нас</h1>
-  <p><span class="highlight">ЗМІ 1+1</span> — це офіційне державне інформаційне агентство України, яке надає громадянам достовірні, перевірені та оперативні новини. Ми працюємо за стандартами журналістської етики та прагнемо бути голосом правди для нашої країни.</p>
+  <div class="highlight">Державне інформаційне агентство України</div>
   
-  <p>Наша місія — інформувати українців про важливі події, підтримувати національну єдність і сприяти розвитку демократичного суспільства. Ми зібрали команду досвідчених журналістів, які працюють у різних куточках України та світу, щоб донести вам найсвіжішу та найактуальнішу інформацію.</p>
+  <p><strong>ЗМІ 1+1</strong> — це офіційне, надійне джерело новин для українського народу. Наша команда працює над тим, щоб кожен отримував правдиву, оперативну і виважену інформацію про події в Україні та світі.</p>
   
-  <p>Сайт працює в демо-режимі, тому всі новини додаються вручну в коді, а інформація не зберігається постійно. Ми раді вашим відгукам та пропозиціям.</p>
+  <p>Ми пишаємося тим, що підтримуємо незалежність і суверенітет України, висвітлюючи важливі соціальні, політичні, економічні та культурні події. Високі стандарти журналістики та етика — наш головний пріоритет.</p>
   
-  <p><strong>Активних журналістів сьогодні:</strong> <span id="journalistCount">0</span></p>
+  <p>Наша редакція складається з досвідчених журналістів, кореспондентів і аналітиків, які працюють у Києві, регіонах України та за кордоном. Ми прагнемо бути голосом правди та мостом між владою і суспільством.</p>
+  
+  <p><strong>Директор ЗМІ 1+1</strong> — <em>Вадим Лийсинко</em>, відомий журналіст і професіонал з багаторічним досвідом у сфері інформаційної безпеки та медіа. Під його керівництвом агентство динамічно розвивається, впроваджуючи сучасні технології та формати подачі новин.</p>
+  
+  <p>Вадим Лийсинко — майор у Національній поліції України, колишній полковник СБУ та начальник БКОЗ, що дає йому унікальне розуміння питань безпеки та оперативної роботи в інформаційній сфері. Його досвід дозволяє забезпечувати баланс між оперативністю та достовірністю інформації.</p>
+  
+  <p>Ми віримо, що медіа мають служити суспільству, тому відкриті до зворотного зв’язку та співпраці з громадськістю. Залишайтеся з нами, щоб бути в курсі найважливіших подій.</p>
 </div>
 
 <script>
-  // Тут додавай свої новини вручну
-  const newsArray = [
+  // Дані новин (оновлені, при потребі можна доповнити)
+  const newsData = [
     {
-      id: 1,
-      title: "Запуск сайту ЗМІ 1+1",
-      date: "2025-07-13",
-      text: "Ласкаво просимо на наш новий сайт! Тут ви знайдете найактуальніші новини.",
-      image: "https://via.placeholder.com/800x400?text=Запуск+сайту",
-      video: ""
+      title: "ЗСУ відбили напад на Лисичанськ: деталі",
+      date: "2023-05-17",
+      text: `Збройні сили України успішно відбили спробу прориву ворога у напрямку Лисичанська. У боях загинули понад 15 окупантів, наші воїни понесли незначні втрати. Позиції міцно утримуються, противник зазнає значних втрат у техніці.\n\nКомандування підкреслює важливість цієї перемоги для подальшого звільнення Донбасу.`,
+      media: {
+        type: "image",
+        src: "https://upload.wikimedia.org/wikipedia/commons/e/e2/UA_flag_Bucha_2.jpg",
+        alt: "Прапор України на фронті"
+      }
     },
     {
-      id: 2,
-      title: "Відео-презентація ЗМІ 1+1",
-      date: "2025-07-12",
-      text: "Ознайомтесь з нашим відео про проєкт ЗМІ 1+1.",
-      image: "",
-      video: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+      title: "Путін наказав вивезти цінне обладнання з заводу в Харкові",
+      date: "2023-05-20",
+      text: `Російське командування здійснило спробу евакуації стратегічного обладнання з заводу "Електромаш" у Харкові. Частину техніки було вивезено, проте більшість залишилась завдяки оперативності СБУ та місцевих партизан.\n\nЦей випадок свідчить про постійний тиск на українську промисловість з боку агресора.`,
+      media: {
+        type: "video",
+        src: "https://www.w3schools.com/html/mov_bbb.mp4"
+      }
+    },
+    {
+      title: "Новий закон про кібербезпеку в Україні: що зміниться",
+      date: "2023-05-25",
+      text: `Верховна Рада ухвалила закон, який посилює захист державних інформаційних систем та критичної інфраструктури від кібератак. Закон передбачає жорсткі санкції для порушників та створення спеціального центру реагування.\n\nЕксперти відзначають, що це важливий крок для зміцнення нацбезпеки у цифрову епоху.`,
+      media: null
     }
   ];
 
-  // Для демонстрації - кількість активних журналістів можна підрахувати (наприклад, у демо поки 5)
-  const activeJournalists = 5;
-
   const newsContainer = document.getElementById('newsContainer');
-  const journalistCountElem = document.getElementById('journalistCount');
-
-  function renderNews() {
-    newsContainer.innerHTML = '';
-    // Сортуємо за датою за спаданням
-    newsArray.sort((a, b) => new Date(b.date) - new Date(a.date));
-    newsArray.forEach(n => {
-      let newsHTML = `<div class="news-item">
-        <div class="news-title">${escapeHtml(n.title)}</div>
-        <div class="news-date">${escapeHtml(n.date)}</div>
-        <div class="news-text">${escapeHtml(n.text)}</div>`;
-
-      if (n.image) {
-        newsHTML += `<img src="${escapeHtml(n.image)}" alt="Фото новини">`;
-      }
-
-      if (n.video) {
-        if (n.video.includes("youtube.com") || n.video.includes("youtu.be")) {
-          newsHTML += `<iframe width="560" height="315" src="${escapeHtml(n.video)}" frameborder="0" allowfullscreen></iframe>`;
-        } else {
-          newsHTML += `<video controls src="${escapeHtml(n.video)}"></video>`;
-        }
-      }
-
-      newsHTML += `</div>`;
-      newsContainer.insertAdjacentHTML('beforeend', newsHTML);
-    });
-  }
-
-  function escapeHtml(text) {
-    if (!text) return "";
-    return text
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
-
-  // Навігація між сторінками
-  const linkHome = document.getElementById('linkHome');
-  const linkAbout = document.getElementById('linkAbout');
   const homePage = document.getElementById('homePage');
   const aboutPage = document.getElementById('aboutPage');
 
-  linkHome.addEventListener('click', (e) => {
-    e.preventDefault();
+  // Функція для створення новинних блоків
+  function renderNews() {
+    newsContainer.innerHTML = '';
+    newsData.forEach(news => {
+      const newsEl = document.createElement('article');
+      newsEl.classList.add('news-item');
+
+      const title = document.createElement('h2');
+      title.className = 'news-title';
+      title.textContent = news.title;
+
+      const date = document.createElement('div');
+      date.className = 'news-date';
+      date.textContent = new Date(news.date).toLocaleDateString('uk-UA', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+
+      const text = document.createElement('p');
+      text.className = 'news-text';
+      text.textContent = news.text;
+
+      newsEl.appendChild(title);
+      newsEl.appendChild(date);
+      newsEl.appendChild(text);
+
+      if (news.media) {
+        if (news.media.type === 'image') {
+          const img = document.createElement('img');
+          img.src = news.media.src;
+          img.alt = news.media.alt || 'Новина';
+          newsEl.appendChild(img);
+        } else if (news.media.type === 'video') {
+          const video = document.createElement('video');
+          video.controls = true;
+          video.src = news.media.src;
+          newsEl.appendChild(video);
+        }
+      }
+
+      newsContainer.appendChild(newsEl);
+    });
+  }
+
+  renderNews();
+
+  // Навігація
+  const linkHome = document.getElementById('linkHome');
+  const linkAbout = document.getElementById('linkAbout');
+
+  function showHome() {
     homePage.style.display = 'block';
     aboutPage.style.display = 'none';
     linkHome.classList.add('active');
     linkAbout.classList.remove('active');
-  });
+  }
 
-  linkAbout.addEventListener('click', (e) => {
-    e.preventDefault();
-    aboutPage.style.display = 'block';
+  function showAbout() {
     homePage.style.display = 'none';
-    linkAbout.classList.add('active');
+    aboutPage.style.display = 'block';
     linkHome.classList.remove('active');
+    linkAbout.classList.add('active');
+  }
+
+  linkHome.addEventListener('click', e => {
+    e.preventDefault();
+    showHome();
   });
 
-  // Виводимо кількість журналістів
-  journalistCountElem.textContent = activeJournalists;
+  linkAbout.addEventListener('click', e => {
+    e.preventDefault();
+    showAbout();
+  });
 
-  renderNews();
+  // За замовчуванням показати головну сторінку
+  showHome();
 </script>
 
 </body>
