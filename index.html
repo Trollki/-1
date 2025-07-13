@@ -26,7 +26,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: #c1272d; /* яскраво-червоний */
+      background-color: #c1272d;
       padding: 18px 25px;
       color: white;
       border-radius: 0 0 14px 14px;
@@ -71,6 +71,31 @@
       box-shadow: 0 0 18px #c1272dcc;
     }
 
+    /* Фільтр тегів */
+    #tagFilter {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .tag-button {
+      background: #c1272d;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    .tag-button:hover {
+      background: #a10005;
+    }
+    .tag-button.active {
+      background: #fff;
+      color: #c1272d;
+      font-weight: 700;
+    }
+
     /* Новини */
     #newsContainer {
       display: flex;
@@ -86,6 +111,7 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       border: 2px solid #c1272d44;
       user-select: none;
+      cursor: pointer;
     }
     .news-item:hover {
       transform: translateY(-6px);
@@ -103,8 +129,23 @@
     .news-date {
       font-size: 1em;
       color: #a13639;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       font-style: italic;
+      user-select: text;
+    }
+    .news-tags {
+      margin-bottom: 15px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .news-tag {
+      background: #c1272d;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      font-weight: 600;
       user-select: text;
     }
     .news-text {
@@ -166,6 +207,50 @@
       margin-bottom: 30px;
     }
 
+    /* Сторінка окремої новини */
+    #newsPage {
+      display: none;
+      background: #fff6f6;
+      padding: 28px 32px;
+      border-radius: 18px;
+      box-shadow: 0 7px 25px rgb(193 39 45 / 0.2);
+      line-height: 1.75;
+      color: #5a1417;
+      user-select: text;
+    }
+    #newsPage h1 {
+      font-size: 2.2em;
+      margin-bottom: 15px;
+      color: #a10005;
+      font-weight: 900;
+      text-shadow: 1px 1px 4px #f5c0c0cc;
+    }
+    #newsPage .news-date {
+      font-size: 1.1em;
+      margin-bottom: 15px;
+    }
+    #newsPage .news-tags {
+      margin-bottom: 20px;
+    }
+    #newsPage .news-text {
+      font-size: 1.2em;
+      line-height: 1.6;
+    }
+    #newsPage .back-button {
+      display: inline-block;
+      background: #c1272d;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+    #newsPage .back-button:hover {
+      background: #a10005;
+    }
+
     /* Адаптивність */
     @media (max-width: 700px) {
       body {
@@ -190,10 +275,10 @@
       .news-title {
         font-size: 1.4em;
       }
-      #aboutPage h1 {
+      #aboutPage h1, #newsPage h1 {
         font-size: 2em;
       }
-      #aboutPage p {
+      #aboutPage p, #newsPage .news-text {
         font-size: 1.05em;
       }
     }
@@ -211,6 +296,7 @@
 
 <!-- Головна сторінка -->
 <div id="homePage">
+  <div id="tagFilter"></div>
   <div id="newsContainer"></div>
 </div>
 
@@ -218,26 +304,25 @@
 <div id="aboutPage">
   <h1>Про нас</h1>
   <div class="highlight">Державне інформаційне агентство України</div>
-  
   <p><strong>ЗМІ 1+1</strong> — це офіційне, надійне джерело новин для українського народу. Наша команда працює над тим, щоб кожен отримував правдиву, оперативну і виважену інформацію про події в Україні та світі.</p>
-  
   <p>Ми пишаємося тим, що підтримуємо незалежність і суверенітет України, висвітлюючи важливі соціальні, політичні, економічні та культурні події. Високі стандарти журналістики та етика — наш головний пріоритет.</p>
-  
   <p>Наша редакція складається з досвідчених журналістів, кореспондентів і аналітиків, які працюють у Києві, регіонах України та за кордоном. Ми прагнемо бути голосом правди та мостом між владою і суспільством.</p>
-  
   <p><strong>Директор ЗМІ 1+1</strong> — <em>Вадим Лийсинко</em>, відомий журналіст і професіонал з багаторічним досвідом у сфері інформаційної безпеки та медіа. Під його керівництвом агентство динамічно розвивається, впроваджуючи сучасні технології та формати подачі новин.</p>
-  
   <p>Вадим Лийсинко — Колишній майор у Національній поліції України, колишній полковник СБУ та начальник БКОЗ, що дає йому унікальне розуміння питань безпеки та оперативної роботи в інформаційній сфері. Його досвід дозволяє забезпечувати баланс між оперативністю та достовірністю інформації.</p>
-  
   <p>Ми віримо, що медіа мають служити суспільству, тому відкриті до зворотного зв’язку та співпраці з громадськістю. Залишайтеся з нами, щоб бути в курсі найважливіших подій.</p>
 </div>
 
+<!-- Сторінка окремої новини -->
+<div id="newsPage"></div>
+
 <script>
-  // Дані новин (оновлені, при потребі можна доповнити)
+  // Дані новин з доданими тегами та унікальними ID
   const newsData = [
     {
+      id: 'news1',
       title: "ЗСУ відбили напад на Лисичанськ: деталі",
       date: "2025-07-13",
+      tags: ["війна", "ЗСУ", "Лисичанськ"],
       text: `Збройні сили України успішно відбили спробу прориву ворога у напрямку Лисичанська. У боях загинули понад 15 окупантів, наші воїни понесли незначні втрати. Позиції міцно утримуються, противник зазнає значних втрат у техніці.\n\nКомандування підкреслює важливість цієї перемоги для подальшого звільнення Донбасу.`,
       media: {
         type: "image",
@@ -246,8 +331,10 @@
       }
     },
     {
+      id: 'news2',
       title: "Путін наказав вивезти цінне обладнання з заводу в Харкові",
       date: "2023-05-20",
+      tags: ["війна", "Харків", "СБУ"],
       text: `Російське командування здійснило спробу евакуації стратегічного обладнання з заводу "Електромаш" у Харкові. Частину техніки було вивезено, проте більшість залишилась завдяки оперативності СБУ та місцевих партизан.\n\nЦей випадок свідчить про постійний тиск на українську промисловість з боку агресора.`,
       media: {
         type: "video",
@@ -255,8 +342,10 @@
       }
     },
     {
+      id: 'news3',
       title: "Новий закон про кібербезпеку в Україні: що зміниться",
       date: "2023-05-25",
+      tags: ["кібербезпека", "політика", "закон"],
       text: `Верховна Рада ухвалила закон, який посилює захист державних інформаційних систем та критичної інфраструктури від кібератак. Закон передбачає жорсткі санкції для порушників та створення спеціального центру реагування.\n\nЕксперти відзначають, що це важливий крок для зміцнення нацбезпеки у цифрову епоху.`,
       media: null
     }
@@ -265,13 +354,48 @@
   const newsContainer = document.getElementById('newsContainer');
   const homePage = document.getElementById('homePage');
   const aboutPage = document.getElementById('aboutPage');
+  const newsPage = document.getElementById('newsPage');
+  const tagFilter = document.getElementById('tagFilter');
+
+  // Унікальні теги
+  const allTags = [...new Set(newsData.flatMap(news => news.tags))];
+  let selectedTag = null;
+
+  // Функція для створення фільтру тегів
+  function renderTagFilter() {
+    tagFilter.innerHTML = '';
+    const allButton = document.createElement('button');
+    allButton.className = 'tag-button' + (selectedTag === null ? ' active' : '');
+    allButton.textContent = 'Усі';
+    allButton.addEventListener('click', () => {
+      selectedTag = null;
+      renderTagFilter();
+      renderNews();
+    });
+    tagFilter.appendChild(allButton);
+
+    allTags.forEach(tag => {
+      const button = document.createElement('button');
+      button.className = 'tag-button' + (selectedTag === tag ? ' active' : '');
+      button.textContent = tag;
+      button.addEventListener('click', () => {
+        selectedTag = tag;
+        renderTagFilter();
+        renderNews();
+      });
+      tagFilter.appendChild(button);
+    });
+  }
 
   // Функція для створення новинних блоків
   function renderNews() {
     newsContainer.innerHTML = '';
-    newsData.forEach(news => {
+    const filteredNews = selectedTag ? newsData.filter(news => news.tags.includes(selectedTag)) : newsData;
+    
+    filteredNews.forEach(news => {
       const newsEl = document.createElement('article');
       newsEl.classList.add('news-item');
+      newsEl.addEventListener('click', () => showNewsPage(news.id));
 
       const title = document.createElement('h2');
       title.className = 'news-title';
@@ -285,12 +409,22 @@
         day: 'numeric'
       });
 
+      const tags = document.createElement('div');
+      tags.className = 'news-tags';
+      news.tags.forEach(tag => {
+        const tagEl = document.createElement('span');
+        tagEl.className = 'news-tag';
+        tagEl.textContent = tag;
+        tags.appendChild(tagEl);
+      });
+
       const text = document.createElement('p');
       text.className = 'news-text';
-      text.textContent = news.text;
+      text.textContent = news.text.split('\n')[0] + '...'; // Показуємо лише перший абзац
 
       newsEl.appendChild(title);
       newsEl.appendChild(date);
+      newsEl.appendChild(tags);
       newsEl.appendChild(text);
 
       if (news.media) {
@@ -311,7 +445,39 @@
     });
   }
 
-  renderNews();
+  // Функція для відображення сторінки окремої новини
+  function showNewsPage(newsId) {
+    const news = newsData.find(n => n.id === newsId);
+    if (!news) return;
+
+    homePage.style.display = 'none';
+    aboutPage.style.display = 'none';
+    newsPage.style.display = 'block';
+    linkHome.classList.remove('active');
+    linkAbout.classList.remove('active');
+
+    newsPage.innerHTML = `
+      <h1>${news.title}</h1>
+      <div class="news-date">${new Date(news.date).toLocaleDateString('uk-UA', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })}</div>
+      <div class="news-tags">
+        ${news.tags.map(tag => `<span class="news-tag">${tag}</span>`).join('')}
+      </div>
+      <p class="news-text">${news.text}</p>
+      ${news.media ? (news.media.type === 'image' ? 
+        `<img src="${news.media.src}" alt="${news.media.alt || 'Новина'}">` : 
+        `<video controls src="${news.media.src}"></video>`) : ''}
+      <a href="#" class="back-button">Повернутися до новин</a>
+    `;
+
+    newsPage.querySelector('.back-button').addEventListener('click', e => {
+      e.preventDefault();
+      showHome();
+    });
+  }
 
   // Навігація
   const linkHome = document.getElementById('linkHome');
@@ -320,13 +486,17 @@
   function showHome() {
     homePage.style.display = 'block';
     aboutPage.style.display = 'none';
+    newsPage.style.display = 'none';
     linkHome.classList.add('active');
     linkAbout.classList.remove('active');
+    renderTagFilter();
+    renderNews();
   }
 
   function showAbout() {
     homePage.style.display = 'none';
     aboutPage.style.display = 'block';
+    newsPage.style.display = 'none';
     linkHome.classList.remove('active');
     linkAbout.classList.add('active');
   }
@@ -341,7 +511,7 @@
     showAbout();
   });
 
-  // За замовчуванням показати головну сторінку
+  // Ініціалізація
   showHome();
 </script>
 
