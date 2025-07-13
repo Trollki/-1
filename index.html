@@ -233,98 +233,116 @@
 </div>
 
 <script>
-  const newsContainer = document.getElementById('newsContainer');
-  const newsDetailPage = document.getElementById('newsDetailPage');
-  const homePage = document.getElementById('homePage');
-  const aboutPage = document.getElementById('aboutPage');
-
+  // Дані новин (оновлені, при потребі можна доповнити)
   const newsData = [
     {
-      id: "news-1",
       title: "ЗСУ відбили напад на Лисичанськ: деталі",
       date: "2023-05-17",
-      image: "img/lys.jpg",
-      text: `Збройні сили України успішно відбили спробу прориву ворога...`,
-      tags: ["Війна", "Оборона"]
+      text: `Збройні сили України успішно відбили спробу прориву ворога у напрямку Лисичанська. У боях загинули понад 15 окупантів, наші воїни понесли незначні втрати. Позиції міцно утримуються, противник зазнає значних втрат у техніці.\n\nКомандування підкреслює важливість цієї перемоги для подальшого звільнення Донбасу.`,
+      media: {
+        type: "image",
+        src: "https://upload.wikimedia.org/wikipedia/commons/e/e2/UA_flag_Bucha_2.jpg",
+        alt: "Прапор України на фронті"
+      }
     },
     {
-      id: "news-2",
-      title: "Політичні дебати: що вирішили у Верховній Раді",
+      title: "Путін наказав вивезти цінне обладнання з заводу в Харкові",
       date: "2023-05-20",
-      image: "img/politics.jpg",
-      text: `Сьогодні у Верховній Раді відбулися палкі дебати щодо...`,
-      tags: ["Політика"]
+      text: `Російське командування здійснило спробу евакуації стратегічного обладнання з заводу "Електромаш" у Харкові. Частину техніки було вивезено, проте більшість залишилась завдяки оперативності СБУ та місцевих партизан.\n\nЦей випадок свідчить про постійний тиск на українську промисловість з боку агресора.`,
+      media: {
+        type: "video",
+        src: "https://www.w3schools.com/html/mov_bbb.mp4"
+      }
+    },
+    {
+      title: "Новий закон про кібербезпеку в Україні: що зміниться",
+      date: "2023-05-25",
+      text: `Верховна Рада ухвалила закон, який посилює захист державних інформаційних систем та критичної інфраструктури від кібератак. Закон передбачає жорсткі санкції для порушників та створення спеціального центру реагування.\n\nЕксперти відзначають, що це важливий крок для зміцнення нацбезпеки у цифрову епоху.`,
+      media: null
     }
   ];
 
-  function renderTags(tags) {
-    return `<div style="margin-top: 10px;">${tags.map(tag =>
-      `<span style="display:inline-block;background:#c1272d;color:white;padding:4px 10px;border-radius:8px;margin-right:6px;font-size:0.85em">${tag}</span>`
-    ).join('')}</div>`;
-  }
+  const newsContainer = document.getElementById('newsContainer');
+  const homePage = document.getElementById('homePage');
+  const aboutPage = document.getElementById('aboutPage');
 
-  function renderNewsList() {
+  // Функція для створення новинних блоків
+  function renderNews() {
     newsContainer.innerHTML = '';
     newsData.forEach(news => {
-      const newsItem = document.createElement('div');
-      newsItem.className = 'news-item';
-      newsItem.innerHTML = `
-        <h2 class="news-title"><a href="#${news.id}" style="text-decoration:none;color:#a10005">${news.title}</a></h2>
-        <div class="news-date">${news.date}</div>
-        ${news.image ? `<img src="${news.image}" alt="фото новини">` : ''}
-        <div class="news-text">${news.text.slice(0, 120)}...</div>
-        ${renderTags(news.tags)}
-      `;
-      newsContainer.appendChild(newsItem);
+      const newsEl = document.createElement('article');
+      newsEl.classList.add('news-item');
+
+      const title = document.createElement('h2');
+      title.className = 'news-title';
+      title.textContent = news.title;
+
+      const date = document.createElement('div');
+      date.className = 'news-date';
+      date.textContent = new Date(news.date).toLocaleDateString('uk-UA', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+
+      const text = document.createElement('p');
+      text.className = 'news-text';
+      text.textContent = news.text;
+
+      newsEl.appendChild(title);
+      newsEl.appendChild(date);
+      newsEl.appendChild(text);
+
+      if (news.media) {
+        if (news.media.type === 'image') {
+          const img = document.createElement('img');
+          img.src = news.media.src;
+          img.alt = news.media.alt || 'Новина';
+          newsEl.appendChild(img);
+        } else if (news.media.type === 'video') {
+          const video = document.createElement('video');
+          video.controls = true;
+          video.src = news.media.src;
+          newsEl.appendChild(video);
+        }
+      }
+
+      newsContainer.appendChild(newsEl);
     });
   }
 
-  function renderNewsDetail(id) {
-    const news = newsData.find(n => n.id === id);
-    if (!news) return;
-
-    homePage.style.display = 'none';
-    aboutPage.style.display = 'none';
-    newsDetailPage.style.display = 'block';
-    newsDetailPage.innerHTML = `
-      <div class="news-item">
-        <h2 class="news-title">${news.title}</h2>
-        <div class="news-date">${news.date}</div>
-        ${news.image ? `<img src="${news.image}" alt="фото новини">` : ''}
-        <div class="news-text">${news.text}</div>
-        ${renderTags(news.tags)}
-        <br><a href="#" style="color:#c1272d;text-decoration:underline">← Повернутись до новин</a>
-      </div>
-    `;
-  }
-
-  function handleHashChange() {
-    const hash = location.hash.replace('#', '');
-    if (hash.startsWith("news-")) {
-      renderNewsDetail(hash);
-    } else {
-      newsDetailPage.style.display = 'none';
-      aboutPage.style.display = hash === "about" ? 'block' : 'none';
-      homePage.style.display = hash === "about" ? 'none' : 'block';
-    }
-  }
+  renderNews();
 
   // Навігація
-  document.getElementById('linkHome').addEventListener('click', e => {
+  const linkHome = document.getElementById('linkHome');
+  const linkAbout = document.getElementById('linkAbout');
+
+  function showHome() {
+    homePage.style.display = 'block';
+    aboutPage.style.display = 'none';
+    linkHome.classList.add('active');
+    linkAbout.classList.remove('active');
+  }
+
+  function showAbout() {
+    homePage.style.display = 'none';
+    aboutPage.style.display = 'block';
+    linkHome.classList.remove('active');
+    linkAbout.classList.add('active');
+  }
+
+  linkHome.addEventListener('click', e => {
     e.preventDefault();
-    location.hash = "";
+    showHome();
   });
 
-  document.getElementById('linkAbout').addEventListener('click', e => {
+  linkAbout.addEventListener('click', e => {
     e.preventDefault();
-    location.hash = "about";
+    showAbout();
   });
 
-  window.addEventListener('hashchange', handleHashChange);
-  window.addEventListener('DOMContentLoaded', () => {
-    renderNewsList();
-    handleHashChange();
-  });
+  // За замовчуванням показати головну сторінку
+  showHome();
 </script>
 
 </body>
