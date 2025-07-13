@@ -2,181 +2,146 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
-  <title>Новини та Про нас</title>
+  <title>ЗМІ 1+1 — Новини</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; background: #f9f9f9; }
-    header { margin-bottom: 20px; }
-    nav a {
-      margin-right: 15px;
-      text-decoration: none;
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f0f0f0;
       color: #333;
-      font-weight: bold;
-      padding: 5px 10px;
-      border-radius: 5px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
     }
-    nav a.active, nav a:hover {
-      background-color: #007BFF;
-      color: white;
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #007BFF;
+      padding-bottom: 10px;
+    }
+    header .logo {
+      font-weight: bold;
+      font-size: 1.8em;
+      color: #007BFF;
+    }
+    nav a {
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: 600;
+      color: #007BFF;
+      cursor: pointer;
+    }
+    nav a.active {
+      text-decoration: underline;
     }
     .news-item {
       background: white;
-      padding: 15px;
-      margin-bottom: 15px;
+      padding: 15px 20px;
       border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      margin-bottom: 25px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
     .news-title {
-      font-size: 1.3em;
+      font-size: 1.4em;
       margin-bottom: 8px;
+      color: #004085;
     }
     .news-date {
       font-size: 0.9em;
-      color: #666;
+      color: #6c757d;
       margin-bottom: 10px;
     }
     .news-text {
       margin-bottom: 10px;
+      line-height: 1.5;
+      white-space: pre-line;
     }
-    img {
+    img, video, iframe {
       max-width: 100%;
-      height: auto;
-      border-radius: 5px;
-      margin-bottom: 10px;
+      border-radius: 6px;
+      margin-bottom: 15px;
     }
-    video {
-      max-width: 100%;
-      border-radius: 5px;
-      margin-bottom: 10px;
+    #aboutPage {
+      display: none;
     }
-    #addNewsForm {
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      margin-top: 20px;
-      max-width: 600px;
-    }
-    #addNewsForm input, #addNewsForm textarea {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      font-size: 1em;
-    }
-    #addNewsForm button {
-      background: #007BFF;
-      color: white;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1em;
-    }
-    #addNewsForm button:hover {
-      background: #0056b3;
-    }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .hidden { display: none; }
   </style>
 </head>
 <body>
 
 <header>
+  <div class="logo">ЗМІ 1+1</div>
   <nav>
-    <a href="#" id="navHome" class="active">Головна</a>
-    <a href="#" id="navAbout">Про нас</a>
+    <a href="#" id="linkHome" class="active">Головна</a>
+    <a href="#" id="linkAbout">Про нас</a>
   </nav>
 </header>
 
-<div class="container">
+<!-- Головна сторінка -->
+<div id="homePage">
+  <div id="newsContainer"></div>
+</div>
 
-  <!-- Головна сторінка -->
-  <div id="pageHome">
-
-    <h1>Новини</h1>
-    <div id="newsList"></div>
-
-    <h2>Додати новину</h2>
-    <form id="addNewsForm">
-      <input type="text" id="newsTitle" placeholder="Заголовок новини" required />
-      <input type="date" id="newsDate" required />
-      <textarea id="newsText" placeholder="Текст новини" rows="4" required></textarea>
-      <input type="text" id="newsImage" placeholder="URL фото (необов’язково)" />
-      <input type="text" id="newsVideo" placeholder="URL відео (YouTube embed або mp4) (необов’язково)" />
-      <button type="submit">Додати новину</button>
-    </form>
-
-  </div>
-
-  <!-- Про нас -->
-  <div id="pageAbout" class="hidden">
-    <h1>Про нас</h1>
-    <p>Це сайт новин. Ми прагнемо інформувати вас про найважливіші події.</p>
-    <p>Тут ви можете додавати новини з фото та відео.</p>
-    <p>Якщо маєш ідеї або пропозиції — звертайся!</p>
-  </div>
-
+<!-- Про нас -->
+<div id="aboutPage">
+  <h1>Про нас</h1>
+  <p>ЗМІ 1+1 — це незалежне новинне медіа, яке прагне надавати вам найсвіжішу та найоб’єктивнішу інформацію.</p>
+  <p>Наш сайт працює у демо-режимі, усі новини додаються вручну в коді.</p>
+  <p>Дякуємо, що читаєте нас!</p>
 </div>
 
 <script>
-  // Початкові новини — тут можна додавати свої, як хочеш
-  let newsArray = [
+  // Тут додавай свої новини вручну
+  const newsArray = [
     {
       id: 1,
-      title: "Запуск сайту новин",
+      title: "Запуск сайту ЗМІ 1+1",
       date: "2025-07-13",
-      text: "Вітаємо на нашому сайті! Тепер тут можна читати свіжі новини.",
-      image: "https://via.placeholder.com/800x400?text=Новини",
+      text: "Ласкаво просимо на наш новий сайт! Тут ви знайдете найактуальніші новини.",
+      image: "https://via.placeholder.com/800x400?text=Запуск+сайту",
       video: ""
     },
     {
       id: 2,
-      title: "Відео-презентація проекту",
+      title: "Відео-презентація ЗМІ 1+1",
       date: "2025-07-12",
-      text: "Дивіться коротке відео про наш проект.",
+      text: "Ознайомтесь з нашим відео про проєкт ЗМІ 1+1.",
       image: "",
       video: "https://www.youtube.com/embed/dQw4w9WgXcQ"
     }
   ];
 
-  const newsList = document.getElementById('newsList');
-  const addNewsForm = document.getElementById('addNewsForm');
+  const newsContainer = document.getElementById('newsContainer');
 
   function renderNews() {
-    newsList.innerHTML = "";
+    newsContainer.innerHTML = '';
     // Сортуємо за датою за спаданням
-    newsArray.sort((a,b) => new Date(b.date) - new Date(a.date));
+    newsArray.sort((a, b) => new Date(b.date) - new Date(a.date));
     newsArray.forEach(n => {
-      const newsDiv = document.createElement('div');
-      newsDiv.className = "news-item";
-
-      let html = `<div class="news-title">${escapeHtml(n.title)}</div>`;
-      html += `<div class="news-date">${escapeHtml(n.date)}</div>`;
-      html += `<div class="news-text">${escapeHtml(n.text).replace(/\n/g, '<br>')}</div>`;
+      let newsHTML = `<div class="news-item">
+        <div class="news-title">${escapeHtml(n.title)}</div>
+        <div class="news-date">${escapeHtml(n.date)}</div>
+        <div class="news-text">${escapeHtml(n.text)}</div>`;
 
       if (n.image) {
-        html += `<img src="${escapeHtml(n.image)}" alt="Фото новини" />`;
+        newsHTML += `<img src="${escapeHtml(n.image)}" alt="Фото новини">`;
       }
+
       if (n.video) {
-        // Якщо посилання на YouTube (iframe), вставимо iframe
         if (n.video.includes("youtube.com") || n.video.includes("youtu.be")) {
-          html += `<iframe width="560" height="315" src="${escapeHtml(n.video)}" frameborder="0" allowfullscreen></iframe>`;
+          newsHTML += `<iframe width="560" height="315" src="${escapeHtml(n.video)}" frameborder="0" allowfullscreen></iframe>`;
         } else {
-          // Інакше вважаємо прямим відео-файлом
-          html += `<video controls src="${escapeHtml(n.video)}"></video>`;
+          newsHTML += `<video controls src="${escapeHtml(n.video)}"></video>`;
         }
       }
 
-      newsDiv.innerHTML = html;
-      newsList.appendChild(newsDiv);
+      newsHTML += `</div>`;
+      newsContainer.insertAdjacentHTML('beforeend', newsHTML);
     });
   }
 
-  // Функція безпечного виводу (щоб не було XSS)
+  // Функція для безпечного виводу тексту (щоб не було XSS)
   function escapeHtml(text) {
     if (!text) return "";
     return text
@@ -187,53 +152,28 @@
       .replace(/'/g, "&#039;");
   }
 
-  // Обробка додавання новини
-  addNewsForm.addEventListener('submit', e => {
-    e.preventDefault();
-
-    const title = addNewsForm.newsTitle.value.trim();
-    const date = addNewsForm.newsDate.value;
-    const text = addNewsForm.newsText.value.trim();
-    const image = addNewsForm.newsImage.value.trim();
-    const video = addNewsForm.newsVideo.value.trim();
-
-    if (!title || !date || !text) {
-      alert("Будь ласка, заповніть заголовок, дату і текст новини.");
-      return;
-    }
-
-    // Додаємо новину з унікальним id
-    const newId = newsArray.length ? Math.max(...newsArray.map(n => n.id)) + 1 : 1;
-    newsArray.push({id: newId, title, date, text, image, video});
-
-    renderNews();
-
-    addNewsForm.reset();
-  });
-
   // Навігація між сторінками
-  const navHome = document.getElementById('navHome');
-  const navAbout = document.getElementById('navAbout');
-  const pageHome = document.getElementById('pageHome');
-  const pageAbout = document.getElementById('pageAbout');
+  const linkHome = document.getElementById('linkHome');
+  const linkAbout = document.getElementById('linkAbout');
+  const homePage = document.getElementById('homePage');
+  const aboutPage = document.getElementById('aboutPage');
 
-  navHome.addEventListener('click', e => {
+  linkHome.addEventListener('click', (e) => {
     e.preventDefault();
-    navHome.classList.add('active');
-    navAbout.classList.remove('active');
-    pageHome.classList.remove('hidden');
-    pageAbout.classList.add('hidden');
+    homePage.style.display = 'block';
+    aboutPage.style.display = 'none';
+    linkHome.classList.add('active');
+    linkAbout.classList.remove('active');
   });
 
-  navAbout.addEventListener('click', e => {
+  linkAbout.addEventListener('click', (e) => {
     e.preventDefault();
-    navAbout.classList.add('active');
-    navHome.classList.remove('active');
-    pageAbout.classList.remove('hidden');
-    pageHome.classList.add('hidden');
+    aboutPage.style.display = 'block';
+    homePage.style.display = 'none';
+    linkAbout.classList.add('active');
+    linkHome.classList.remove('active');
   });
 
-  // Початковий рендер
   renderNews();
 </script>
 
