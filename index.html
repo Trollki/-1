@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ЗМІ 1+1 - Незалежне новинне медіа</title>
     <style>
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            margin: 0; padding: 0; box-sizing: border-box;
         }
-
         :root {
             --primary-red: #c20000;
             --white: #ffffff;
@@ -20,15 +17,15 @@
             --shadow: 0 2px 4px rgba(0,0,0,0.1);
             --shadow-hover: 0 4px 8px rgba(0,0,0,0.15);
         }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--white);
             color: #333;
             line-height: 1.6;
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
         }
-
-        /* Header */
         .header {
             background: var(--white);
             border-bottom: 2px solid var(--primary-red);
@@ -37,8 +34,8 @@
             top: 0;
             z-index: 1000;
             box-shadow: var(--shadow);
+            margin-bottom: 20px;
         }
-
         .nav {
             max-width: 1200px;
             margin: 0 auto;
@@ -47,20 +44,17 @@
             align-items: center;
             padding: 0 0.8rem;
         }
-
         .logo-section {
             display: flex;
             align-items: center;
             gap: 0.8rem;
         }
-
         .logo {
             font-size: clamp(1.1rem, 3vw, 1.8rem);
             font-weight: bold;
             color: var(--primary-red);
             text-decoration: none;
         }
-
         .logo-details {
             display: flex;
             flex-direction: column;
@@ -69,1457 +63,163 @@
             line-height: 1.2;
         }
 
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            font-size: 0.6rem;
-            color: var(--primary-red);
-            font-weight: 500;
-        }
-
-        .live-dot {
-            width: 5px;
-            height: 5px;
-            background: var(--primary-red);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 1rem;
-        }
-
-        .nav-link {
-            color: #333;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.3rem 0.6rem;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            font-size: 0.8rem;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            background: var(--primary-red);
-            color: var(--white);
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .hamburger span {
-            width: 20px;
-            height: 2px;
-            background: var(--primary-red);
-            margin: 1.5px 0;
-            transition: 0.3s;
-        }
-
-        /* Main Content */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 0.8rem;
-        }
-
-        .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 1.5rem 0;
-            background: linear-gradient(135deg, var(--light-gray) 0%, var(--white) 100%);
-            margin-bottom: 1rem;
-            border-radius: 6px;
-        }
-
-        .hero h1 {
-            font-size: clamp(1.5rem, 4vw, 2.8rem);
-            color: var(--primary-red);
-            margin-bottom: 0.6rem;
-            font-weight: bold;
-        }
-
-        .hero p {
-            font-size: clamp(0.8rem, 2vw, 1.1rem);
-            color: var(--dark-gray);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* User Info */
-        .user-info {
+        /* Статистика */
+        .stats, #footerStats {
+            margin: 20px 0;
+            padding: 10px;
             background: var(--light-gray);
-            padding: 0.6rem;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-            display: none;
-            font-size: 0.8rem;
-        }
-
-        .user-info.show {
-            display: block;
-        }
-
-        /* Login Form */
-        .login-form {
-            background: var(--white);
-            padding: 1.2rem;
             border-radius: 6px;
-            box-shadow: var(--shadow);
-            max-width: 320px;
-            margin: 1rem auto;
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+        }
+        .stats span, .footer-stat {
+            font-weight: 600;
+            color: var(--primary-red);
         }
 
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.3rem;
-            font-weight: 500;
-            color: #333;
-            font-size: 0.8rem;
-        }
-
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%;
-            padding: 0.5rem;
-            border: 2px solid var(--border-color);
-            border-radius: 3px;
-            font-size: 0.8rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-            outline: none;
-            border-color: var(--primary-red);
-        }
-
-        .btn {
-            background: var(--primary-red);
-            color: var(--white);
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .btn:hover {
-            background: #a00000;
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .btn-secondary {
-            background: var(--dark-gray);
-        }
-
-        .btn-secondary:hover {
-            background: #545b62;
-        }
-
-        .btn-danger {
-            background: #dc3545;
-        }
-
-        .btn-danger:hover {
-            background: #c82333;
-        }
-
-        /* News Publishing Form */
-        .publish-form {
-            background: var(--white);
-            padding: 1.2rem;
-            border-radius: 6px;
-            box-shadow: var(--shadow);
-            margin-bottom: 1rem;
-            display: none;
-        }
-
-        .publish-form.show {
-            display: block;
-        }
-
-        /* Admin Panel */
-        .admin-panel {
-            background: var(--white);
-            padding: 1.2rem;
-            border-radius: 6px;
-            box-shadow: var(--shadow);
-            margin-bottom: 1rem;
-            display: none;
-        }
-
-        .admin-panel.show {
-            display: block;
-        }
-
-        .admin-section {
-            margin-bottom: 1.2rem;
-            padding: 0.6rem;
+        /* Лідерборд */
+        #leaderboard {
+            margin-top: 30px;
             border: 1px solid var(--border-color);
-            border-radius: 5px;
-        }
-
-        .admin-section h4 {
-            color: var(--primary-red);
-            margin-bottom: 0.6rem;
-            font-size: 0.9rem;
-        }
-
-        .journalist-list {
-            display: grid;
-            gap: 0.6rem;
-        }
-
-        .journalist-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.6rem;
-            background: var(--light-gray);
-            border-radius: 3px;
-            font-size: 0.8rem;
-        }
-
-        .journalist-info {
-            flex: 1;
-        }
-
-        .journalist-actions {
-            display: flex;
-            gap: 0.3rem;
-        }
-
-        /* Controls */
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-        }
-
-        .filter-tags {
-            display: flex;
-            gap: 0.3rem;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            padding: 0.2rem 0.5rem;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            background: var(--primary-red);
-            color: white;
-        }
-
-        .tag:hover, .tag.active {
-            border-color: #333;
-            transform: scale(1.05);
-        }
-
-        .view-toggle {
-            display: flex;
-            gap: 0.3rem;
-        }
-
-        /* News Grid */
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .news-grid.list-view {
-            grid-template-columns: 1fr;
-        }
-
-        .news-card {
+            border-radius: 8px;
+            padding: 15px;
             background: var(--white);
-            border-radius: 6px;
             box-shadow: var(--shadow);
-            overflow: hidden;
-            transition: all 0.3s ease;
-            border: 1px solid var(--border-color);
         }
-
-        .news-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .news-card.list-view {
-            display: flex;
-            align-items: center;
-        }
-
-        .news-content {
-            padding: 1rem;
-        }
-
-        .news-card.list-view .news-content {
-            flex: 1;
-        }
-
-        .news-title {
-            font-size: 1rem;
-            font-weight: bold;
-            margin-bottom: 0.6rem;
-            color: #333;
-            line-height: 1.4;
-        }
-
-        .news-text {
-            margin-bottom: 0.6rem;
-            color: var(--dark-gray);
-            line-height: 1.6;
-            font-size: 0.8rem;
-        }
-
-        .news-video {
-            margin: 0.6rem 0;
-        }
-
-        .news-video iframe {
-            width: 100%;
-            height: 160px;
-            border-radius: 3px;
-        }
-
-        .news-card.list-view .news-video iframe {
-            width: 220px;
-            height: 120px;
-        }
-
-        .news-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-top: 0.6rem;
-            padding-top: 0.6rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .news-tags {
-            display: flex;
-            gap: 0.3rem;
-            flex-wrap: wrap;
-        }
-
-        .like-button {
-            background: none;
-            border: 2px solid var(--primary-red);
-            color: var(--primary-red);
-            padding: 0.3rem 0.6rem;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            font-size: 0.7rem;
-        }
-
-        .like-button:hover, .like-button.liked {
-            background: var(--primary-red);
-            color: var(--white);
-        }
-
-        .exclusive-badge {
-            position: absolute;
-            top: 0.6rem;
-            right: 0.6rem;
-            background: var(--primary-red);
-            color: var(--white);
-            padding: 0.2rem 0.5rem;
-            border-radius: 10px;
-            font-size: 0.6rem;
-            font-weight: bold;
-        }
-
-        .news-card {
-            position: relative;
-        }
-
-        .author-info {
-            font-size: 0.7rem;
-            color: var(--dark-gray);
-            font-style: italic;
-            margin-bottom: 0.6rem;
-        }
-
-        /* About Section */
-        .about-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .about-content h2 {
-            color: var(--primary-red);
-            font-size: 1.6rem;
-            margin-bottom: 1.2rem;
-        }
-
-        .about-content p {
-            font-size: 0.9rem;
-            margin-bottom: 1.2rem;
-            line-height: 1.8;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .stat-card {
-            background: var(--light-gray);
-            padding: 1.2rem;
-            border-radius: 6px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-red);
-            display: block;
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: var(--dark-gray);
-            margin-top: 0.3rem;
-        }
-
-        /* Leaderboard */
-        .leaderboard {
-            background: var(--white);
-            border-radius: 6px;
-            box-shadow: var(--shadow);
-            padding: 1.2rem;
-            margin: 1rem 0;
-        }
-
-        .leaderboard h3 {
-            color: var(--primary-red);
-            margin-bottom: 1rem;
-            text-align: center;
-            font-size: 1.1rem;
-        }
-
         .leader-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 0.6rem;
+            padding: 10px 0;
             border-bottom: 1px solid var(--border-color);
-            font-size: 0.8rem;
+            align-items: center;
         }
-
         .leader-item:last-child {
             border-bottom: none;
         }
-
         .leader-rank {
             font-weight: bold;
             color: var(--primary-red);
-            width: 1.2rem;
+            width: 30px;
         }
-
         .leader-name {
             flex: 1;
-            margin-left: 0.6rem;
+            font-weight: 600;
         }
-
-        .leader-stats {
-            text-align: right;
+        .leader-stats > div {
+            font-size: 0.85rem;
             color: var(--dark-gray);
-            font-size: 0.7rem;
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--light-gray);
-            padding: 1.2rem 0;
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-
-        .footer-stats {
-            display: flex;
-            justify-content: center;
-            gap: 1.2rem;
-            flex-wrap: wrap;
-            margin-bottom: 0.6rem;
-        }
-
-        .footer-stat {
-            font-size: 0.8rem;
-            color: var(--dark-gray);
-        }
-
-        .footer-stat strong {
-            color: var(--primary-red);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .logo-details {
-                display: none;
-            }
-
-            .nav-menu {
-                position: fixed;
-                top: 50px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 50px);
-                background: var(--white);
-                flex-direction: column;
-                justify-content: start;
-                align-items: center;
-                padding-top: 1.2rem;
-                transition: left 0.3s ease;
-                box-shadow: var(--shadow);
-            }
-
-            .nav-menu.active {
-                left: 0;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .news-grid {
-                grid-template-columns: 1fr;
-                gap: 0.8rem;
-            }
-
-            .controls {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .filter-tags {
-                justify-content: center;
-            }
-
-            .news-card.list-view {
-                flex-direction: column;
-            }
-
-            .news-card.list-view .news-video iframe {
-                width: 100%;
-                height: 160px;
-            }
-
-            .footer-stats {
-                flex-direction: column;
-                gap: 0.3rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 0.8rem;
-            }
-
-            .journalist-item {
-                flex-direction: column;
-                gap: 0.6rem;
-                align-items: stretch;
-            }
-
-            .journalist-actions {
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0.8rem 0.4rem;
-            }
-
-            .login-form, .publish-form, .admin-panel {
-                padding: 0.8rem;
-                margin: 0.8rem;
-            }
-
-            .news-content {
-                padding: 0.8rem;
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .news-card {
-            animation: fadeIn 0.5s ease forwards;
-        }
-
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 0.5rem;
-            border-radius: 3px;
-            margin-bottom: 0.6rem;
-            border: 1px solid #f5c6cb;
-            font-size: 0.8rem;
-        }
-
-        .success-message {
-            background: #d4edda;
-            color: #155724;
-            padding: 0.5rem;
-            border-radius: 3px;
-            margin-bottom: 0.6rem;
-            border: 1px solid #c3e6cb;
-            font-size: 0.8rem;
-        }
-
-        /* Hidden class */
-        .hidden {
-            display: none !important;
-        }
-
-        /* Journalist-only sections */
-        .journalist-only {
-            display: none;
-        }
-
-        .journalist-only.show {
-            display: block;
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <nav class="nav">
             <div class="logo-section">
                 <a href="#" class="logo">ЗМІ 1+1</a>
-                <div class="logo-details">
-                    <div class="live-indicator">
-                        <span class="live-dot"></span>
-                        LIVE
-                    </div>
-                    <div>Незалежне медіа</div>
-                    <div>24/7 новини України</div>
-                </div>
-            </div>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="#" class="nav-link active" data-section="home">Головна</a></li>
-                <li><a href="#" class="nav-link" data-section="about">Про нас</a></li>
-                <li><a href="#" class="nav-link journalist-only" data-section="leaderboard">Рейтинг</a></li>
-                <li><a href="#" class="nav-link" id="authLink">Вхід</a></li>
-            </ul>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+                <div class="logo-details">Незалежне<br>новинне медіа</div>
             </div>
         </nav>
     </header>
 
-    <!-- Main Content -->
-    <main class="container">
-        <!-- User Info -->
-        <div class="user-info" id="userInfo">
-            <h3>Вітаємо, <span id="userName"></span>!</h3>
-            <p>Публікацій: <span id="userPosts">0</span> | Лайків отримано: <span id="userLikes">0</span></p>
-            <button class="btn btn-secondary" onclick="logout()">Вийти</button>
+    <section class="stats">
+        <span>Всього новин: <strong id="totalNews">0</strong></span>
+        <span>Всього лайків: <strong id="totalLikes">0</strong></span>
+        <span>Активних журналістів: <strong id="activeJournalists">0</strong></span>
+    </section>
+
+    <section>
+        <h2>Таблиця лідерів журналістів</h2>
+        <div id="leaderboard">
+            <p style="text-align: center; color: #666;">Поки немає активних журналістів</p>
         </div>
+    </section>
 
-        <!-- Home Section -->
-        <section class="section active" id="homeSection">
-            <div class="hero">
-                <h1>ЗМІ 1+1</h1>
-                <p>Незалежне новинне медіа України. Об'єктивно, оперативно, достовірно.</p>
-            </div>
-
-            <!-- Admin Panel -->
-            <div class="admin-panel" id="adminPanel">
-                <h3>Панель адміністратора</h3>
-                
-                <div class="admin-section">
-                    <h4>Додати нового журналіста</h4>
-                    <form id="addJournalistForm">
-                        <div class="form-group">
-                            <label for="newJournalistName">Ім'я журналіста</label>
-                            <input type="text" id="newJournalistName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="newJournalistPassword">Пароль</label>
-                            <input type="password" id="newJournalistPassword" required>
-                        </div>
-                        <button type="submit" class="btn">Додати журналіста</button>
-                    </form>
-                </div>
-
-                <div class="admin-section">
-                    <h4>Управління журналістами</h4>
-                    <div class="journalist-list" id="journalistList">
-                        <!-- Journalists will be populated here -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Publishing Form -->
-            <div class="publish-form" id="publishForm">
-                <h3>Опублікувати новину</h3>
-                <form id="newsForm">
-                    <div class="form-group">
-                        <label for="newsTitle">Заголовок новини</label>
-                        <input type="text" id="newsTitle" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="newsText">Основний текст</label>
-                        <textarea id="newsText" rows="4" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="newsTag">Тег</label>
-                        <select id="newsTag" required>
-                            <option value="politics">Політика</option>
-                            <option value="economy">Економіка</option>
-                            <option value="culture">Культура</option>
-                            <option value="world">Світ</option>
-                            <option value="tech">Технології</option>
-                            <option value="sport">Спорт</option>
-                            <option value="health">Здоров'я</option>
-                            <option value="education">Освіта</option>
-                            <option value="crime">Кримінал</option>
-                            <option value="weather">Погода</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="newsVideo">Посилання на відео (YouTube)</label>
-                        <input type="url" id="newsVideo" placeholder="https://www.youtube.com/watch?v=...">
-                    </div>
-                    <button type="submit" class="btn">Опублікувати</button>
-                </form>
-            </div>
-
-            <!-- Controls -->
-            <div class="controls">
-                <div class="filter-tags">
-                    <span class="tag active" data-filter="all">Всі</span>
-                    <span class="tag" data-filter="politics">Політика</span>
-                    <span class="tag" data-filter="economy">Економіка</span>
-                    <span class="tag" data-filter="culture">Культура</span>
-                    <span class="tag" data-filter="world">Світ</span>
-                    <span class="tag" data-filter="tech">Технології</span>
-                    <span class="tag" data-filter="sport">Спорт</span>
-                    <span class="tag" data-filter="health">Здоров'я</span>
-                    <span class="tag" data-filter="education">Освіта</span>
-                    <span class="tag" data-filter="crime">Кримінал</span>
-                    <span class="tag" data-filter="weather">Погода</span>
-                </div>
-                <div class="view-toggle">
-                    <button class="btn" id="gridView">Сітка</button>
-                    <button class="btn btn-secondary" id="listView">Список</button>
-                </div>
-            </div>
-
-            <!-- News Grid -->
-            <div class="news-grid" id="newsGrid">
-                <p style="text-align: center; color: #666; font-size: 1.1rem;">Новин поки немає. Увійдіть як журналіст, щоб опублікувати першу новину!</p>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section class="section" id="aboutSection">
-            <div class="about-content">
-                <h2>Про ЗМІ 1+1</h2>
-                <p>ЗМІ 1+1 - це незалежне новинне медіа, яке працює для забезпечення українського суспільства об'єктивною, оперативною та достовірною інформацією. Наша місія полягає у створенні якісного журналістського контенту, який допомагає громадянам приймати обґрунтовані рішення.</p>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <span class="stat-number" id="totalNews">0</span>
-                        <div class="stat-label">Новин опубліковано</div>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number" id="totalLikes">0</span>
-                        <div class="stat-label">Лайків поставлено</div>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number" id="activeJournalists">0</span>
-                        <div class="stat-label">Активних журналістів</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Leaderboard Section (Journalist Only) -->
-        <section class="section journalist-only" id="leaderboardSection">
-            <div class="leaderboard">
-                <h3>🏆 Рейтинг журналістів</h3>
-                <div id="leaderboard">
-                    <!-- Leaderboard will be populated by JavaScript -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Login Section -->
-        <section class="section" id="loginSection">
-            <div class="login-form">
-                <h2>Вхід для журналістів</h2>
-                <div id="loginMessage"></div>
-                <form id="loginForm">
-                    <div class="form-group">
-                        <label for="username">Логін</label>
-                        <input type="text" id="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Пароль</label>
-                        <input type="password" id="password" required>
-                    </div>
-                    <button type="submit" class="btn">Увійти</button>
-                </form>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-stats" id="footerStats">
-            <!-- Stats will be populated by JavaScript -->
-        </div>
-        <p>&copy; 2025 ЗМІ 1+1. Всі права захищені.</p>
+    <footer id="footerStats" class="stats" style="margin-top: 40px;">
+        <!-- Статистика в футері буде тут -->
     </footer>
 
-    <script>
-        // Application State
-        let currentUser = null;
-        let currentFilter = 'all';
-        let currentView = 'grid';
+<script>
+    // При першому запуску додамо для прикладу початкові дані (тільки якщо немає)
+    if (!localStorage.getItem('news')) {
+        const sampleNews = [
+            {id: 1, author: "Іван", likes: 10},
+            {id: 2, author: "Марія", likes: 5},
+            {id: 3, author: "Іван", likes: 7},
+            {id: 4, author: "Олег", likes: 2}
+        ];
+        localStorage.setItem('news', JSON.stringify(sampleNews));
+    }
+    if (!localStorage.getItem('activeJournalists')) {
+        const sampleJournalists = ["Іван", "Марія", "Олег"];
+        localStorage.setItem('activeJournalists', JSON.stringify(sampleJournalists));
+    }
+    if (!localStorage.getItem('userId')) {
+        localStorage.setItem('userId', 'user_' + Date.now());
+    }
+
+    function updateStats() {
+        const allNews = JSON.parse(localStorage.getItem('news') || '[]');
+        const totalNews = allNews.length;
+        const totalLikes = allNews.reduce((sum, news) => sum + (news.likes || 0), 0);
+        const activeJournalists = JSON.parse(localStorage.getItem('activeJournalists') || '[]').length;
+
+        document.getElementById('totalNews').textContent = totalNews;
+        document.getElementById('totalLikes').textContent = totalLikes;
+        document.getElementById('activeJournalists').textContent = activeJournalists;
+
+        const footerStats = document.getElementById('footerStats');
+        footerStats.innerHTML = `
+            <span class="footer-stat">Новин: <strong>${totalNews}</strong></span>
+            <span class="footer-stat">Лайків: <strong>${totalLikes}</strong></span>
+            <span class="footer-stat">Журналістів: <strong>${activeJournalists}</strong></span>
+        `;
+    }
+
+    function updateLeaderboard() {
+        const allNews = JSON.parse(localStorage.getItem('news') || '[]');
+        const activeJournalists = JSON.parse(localStorage.getItem('activeJournalists') || '[]');
         
-        // Users database - stored in localStorage
-        function getUsers() {
-            const defaultUsers = {
-                'Вадим': 'ЗМІ11',
-                'Вася': 'ЗМІ1+1'
+        const journalistStats = {};
+
+        activeJournalists.forEach(journalist => {
+            const journalistNews = allNews.filter(news => news.author === journalist);
+            const totalLikes = journalistNews.reduce((sum, news) => sum + (news.likes || 0), 0);
+            
+            journalistStats[journalist] = {
+                posts: journalistNews.length,
+                likes: totalLikes,
+                avgLikes: journalistNews.length > 0 ? (totalLikes / journalistNews.length).toFixed(1) : 0
             };
-            return JSON.parse(localStorage.getItem('users') || JSON.stringify(defaultUsers));
-        }
-
-        function saveUsers(users) {
-            localStorage.setItem('users', JSON.stringify(users));
-        }
-
-        // Tag translations
-        const tagTranslations = {
-            'politics': 'Політика',
-            'economy': 'Економіка', 
-            'culture': 'Культура',
-            'world': 'Світ',
-            'tech': 'Технології',
-            'sport': 'Спорт',
-            'health': 'Здоров\'я',
-            'education': 'Освіта',
-            'crime': 'Кримінал',
-            'weather': 'Погода'
-        };
-
-        // Initialize app
-        document.addEventListener('DOMContentLoaded', function() {
-            // Clear any existing test news on first load
-            if (!localStorage.getItem('newsCleared')) {
-                localStorage.removeItem('news');
-                localStorage.setItem('newsCleared', 'true');
-            }
-            
-            setupEventListeners();
-            updateStats();
-            checkAuthState();
-            loadNews();
-            updateJournalistList();
-            
-            // Set up real-time updates
-            setInterval(loadNews, 2000); // Check for new news every 2 seconds
         });
 
-        // Setup event listeners
-        function setupEventListeners() {
-            // Navigation
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', handleNavigation);
-            });
+        const sortedJournalists = Object.entries(journalistStats)
+            .sort(([,a], [,b]) => b.likes - a.likes);
 
-            // Hamburger menu
-            document.getElementById('hamburger').addEventListener('click', toggleMobileMenu);
-
-            // Login form
-            document.getElementById('loginForm').addEventListener('submit', handleLogin);
-
-            // News form
-            document.getElementById('newsForm').addEventListener('submit', handleNewsSubmit);
-
-            // Add journalist form
-            document.getElementById('addJournalistForm').addEventListener('submit', handleAddJournalist);
-
-            // Filter tags
-            document.querySelectorAll('[data-filter]').forEach(tag => {
-                tag.addEventListener('click', handleFilter);
-            });
-
-            // View toggle
-            document.getElementById('gridView').addEventListener('click', () => setView('grid'));
-            document.getElementById('listView').addEventListener('click', () => setView('list'));
-
-            // Auth link
-            document.getElementById('authLink').addEventListener('click', handleAuthLink);
-        }
-
-        // Navigation handler
-        function handleNavigation(e) {
-            e.preventDefault();
-            const section = e.target.dataset.section;
-            
-            // Update active nav link
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            e.target.classList.add('active');
-
-            // Show/hide sections
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-
-            if (section === 'home') {
-                document.getElementById('homeSection').classList.add('active');
-            } else if (section === 'about') {
-                document.getElementById('aboutSection').classList.add('active');
-                updateStats();
-            } else if (section === 'leaderboard') {
-                document.getElementById('leaderboardSection').classList.add('active');
-                updateLeaderboard();
-            }
-
-            // Close mobile menu
-            document.getElementById('navMenu').classList.remove('active');
-        }
-
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            document.getElementById('navMenu').classList.toggle('active');
-        }
-
-        // Auth link handler
-        function handleAuthLink(e) {
-            e.preventDefault();
-            if (currentUser) {
-                logout();
-            } else {
-                showLoginSection();
-            }
-        }
-
-        // Show login section
-        function showLoginSection() {
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById('loginSection').classList.add('active');
-            
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-        }
-
-        // Login handler
-        function handleLogin(e) {
-            e.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const messageDiv = document.getElementById('loginMessage');
-            const users = getUsers();
-
-            if (users[username] && users[username] === password) {
-                currentUser = username;
-                localStorage.setItem('currentUser', username);
-                
-                // Track active journalists
-                let activeJournalists = JSON.parse(localStorage.getItem('activeJournalists') || '[]');
-                if (!activeJournalists.includes(username)) {
-                    activeJournalists.push(username);
-                    localStorage.setItem('activeJournalists', JSON.stringify(activeJournalists));
-                }
-
-                messageDiv.innerHTML = '<div class="success-message">Успішний вхід!</div>';
-                setTimeout(() => {
-                    showHomeSection();
-                    updateAuthState();
-                }, 1000);
-            } else {
-                messageDiv.innerHTML = '<div class="error-message">Невірний логін або пароль</div>';
-            }
-        }
-
-        // Add journalist handler
-        function handleAddJournalist(e) {
-            e.preventDefault();
-            
-            if (currentUser !== 'Вадим') {
-                alert('Тільки адміністратор може додавати журналістів');
-                return;
-            }
-
-            const name = document.getElementById('newJournalistName').value;
-            const password = document.getElementById('newJournalistPassword').value;
-            const users = getUsers();
-
-            if (users[name]) {
-                alert('Журналіст з таким іменем вже існує');
-                return;
-            }
-
-            users[name] = password;
-            saveUsers(users);
-            
-            document.getElementById('addJournalistForm').reset();
-            updateJournalistList();
-            alert('Журналіста успішно додано!');
-        }
-
-        // Update journalist list
-        function updateJournalistList() {
-            if (currentUser !== 'Вадим') return;
-
-            const users = getUsers();
-            const journalistList = document.getElementById('journalistList');
-            
-            journalistList.innerHTML = Object.keys(users).map(name => `
-                <div class="journalist-item">
-                    <div class="journalist-info">
-                        <strong>${name}</strong>
-                        ${name === 'Вадим' ? '<span style="color: var(--primary-red);"> (Адміністратор)</span>' : ''}
-                    </div>
-                    <div class="journalist-actions">
-                        ${name !== 'Вадим' ? `<button class="btn btn-danger" onclick="deleteJournalist('${name}')">Видалити</button>` : ''}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Delete journalist
-        function deleteJournalist(name) {
-            if (currentUser !== 'Вадим') {
-                alert('Тільки адміністратор може видаляти журналістів');
-                return;
-            }
-
-            if (confirm(`Ви впевнені, що хочете видалити журналіста "${name}"?`)) {
-                const users = getUsers();
-                delete users[name];
-                saveUsers(users);
-                
-                // Remove from active journalists
-                let activeJournalists = JSON.parse(localStorage.getItem('activeJournalists') || '[]');
-                activeJournalists = activeJournalists.filter(j => j !== name);
-                localStorage.setItem('activeJournalists', JSON.stringify(activeJournalists));
-                
-                updateJournalistList();
-                updateStats();
-                alert('Журналіста видалено');
-            }
-        }
-
-        // Show home section
-        function showHomeSection() {
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById('homeSection').classList.add('active');
-            
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            document.querySelector('[data-section="home"]').classList.add('active');
-        }
-
-        // Update auth state
-        function updateAuthState() {
-            const authLink = document.getElementById('authLink');
-            const userInfo = document.getElementById('userInfo');
-            const publishForm = document.getElementById('publishForm');
-            const adminPanel = document.getElementById('adminPanel');
-            const journalistOnlyElements = document.querySelectorAll('.journalist-only');
-
-            if (currentUser) {
-                authLink.textContent = 'Вийти';
-                userInfo.classList.add('show');
-                publishForm.classList.add('show');
-                
-                // Show journalist-only elements
-                journalistOnlyElements.forEach(el => el.classList.add('show'));
-                
-                // Show admin panel only for Вадим
-                if (currentUser === 'Вадим') {
-                    adminPanel.classList.add('show');
-                    updateJournalistList();
-                } else {
-                    adminPanel.classList.remove('show');
-                }
-                
-                document.getElementById('userName').textContent = currentUser;
-                updateUserStats();
-            } else {
-                authLink.textContent = 'Вхід';
-                userInfo.classList.remove('show');
-                publishForm.classList.remove('show');
-                adminPanel.classList.remove('show');
-                
-                // Hide journalist-only elements
-                journalistOnlyElements.forEach(el => el.classList.remove('show'));
-            }
-        }
-
-        // Update user stats
-        function updateUserStats() {
-            const news = JSON.parse(localStorage.getItem('news') || '[]');
-            const userNews = news.filter(n => n.author === currentUser);
-            const userLikes = userNews.reduce((sum, n) => sum + (n.likes || 0), 0);
-
-            document.getElementById('userPosts').textContent = userNews.length;
-            document.getElementById('userLikes').textContent = userLikes;
-        }
-
-        // Check auth state on load
-        function checkAuthState() {
-            const storedUser = localStorage.getItem('currentUser');
-            const users = getUsers();
-            if (storedUser && users[storedUser]) {
-                currentUser = storedUser;
-                updateAuthState();
-            }
-        }
-
-        // Logout
-        function logout() {
-            currentUser = null;
-            localStorage.removeItem('currentUser');
-            updateAuthState();
-            showHomeSection();
-        }
-
-        // Handle news submit
-        function handleNewsSubmit(e) {
-            e.preventDefault();
-            
-            const title = document.getElementById('newsTitle').value;
-            const text = document.getElementById('newsText').value;
-            const tag = document.getElementById('newsTag').value;
-            const video = document.getElementById('newsVideo').value;
-
-            const news = {
-                id: Date.now(),
-                title,
-                text,
-                tag,
-                video,
-                author: currentUser,
-                timestamp: new Date().toLocaleString('uk-UA'),
-                likes: 0,
-                likedBy: []
-            };
-
-            // Save news
-            let allNews = JSON.parse(localStorage.getItem('news') || '[]');
-            allNews.unshift(news);
-            localStorage.setItem('news', JSON.stringify(allNews));
-
-            // Reset form
-            document.getElementById('newsForm').reset();
-
-            // Reload news immediately for real-time effect
-            loadNews();
-            updateStats();
-            updateUserStats();
-
-            alert('Новину успішно опубліковано!');
-        }
-
-        // Load news
-        function loadNews() {
-            const newsGrid = document.getElementById('newsGrid');
-            const allNews = JSON.parse(localStorage.getItem('news') || '[]');
-            
-            let filteredNews = allNews;
-            if (currentFilter !== 'all') {
-                filteredNews = allNews.filter(news => news.tag === currentFilter);
-            }
-
-            if (filteredNews.length === 0) {
-                newsGrid.innerHTML = '<p style="text-align: center; color: #666; font-size: 1.1rem;">Новин поки немає. Увійдіть як журналіст, щоб опублікувати першу новину!</p>';
-                return;
-            }
-
-            newsGrid.innerHTML = filteredNews.map(news => createNewsCard(news)).join('');
-        }
-
-        // Create news card
-        function createNewsCard(news) {
-            const isExclusive = news.likes >= 10;
-            const videoEmbed = news.video ? getVideoEmbed(news.video) : '';
-            const tagName = tagTranslations[news.tag] || news.tag;
-
-            return `
-                <article class="news-card" data-tag="${news.tag}">
-                    ${isExclusive ? '<div class="exclusive-badge">🔥 Гаряче</div>' : ''}
-                    <div class="news-content">
-                        <div class="author-info">Автор: ${news.author} • ${news.timestamp}</div>
-                        <h3 class="news-title">${news.title}</h3>
-                        <p class="news-text">${news.text}</p>
-                        ${videoEmbed}
-                        <div class="news-meta">
-                            <div class="news-tags">
-                                <span class="tag">${tagName}</span>
-                            </div>
-                            <button class="like-button ${news.likedBy.includes(getUserId()) ? 'liked' : ''}" 
-                                    onclick="toggleLike(${news.id})">
-                                ❤️ ${news.likes}
-                            </button>
-                        </div>
-                    </div>
-                </article>
-            `;
-        }
-
-        // Get video embed
-        function getVideoEmbed(url) {
-            if (!url) return '';
-            
-            // YouTube URL processing
-            let videoId = '';
-            if (url.includes('youtube.com/watch?v=')) {
-                videoId = url.split('v=')[1].split('&')[0];
-            } else if (url.includes('youtu.be/')) {
-                videoId = url.split('youtu.be/')[1].split('?')[0];
-            }
-
-            if (videoId) {
-                return `
-                    <div class="news-video">
-                        <iframe src="https://www.youtube.com/embed/${videoId}" 
-                                frameborder="0" 
-                                allowfullscreen>
-                        </iframe>
-                    </div>
-                `;
-            }
-
-            return `<div class="news-video"><p>Відео: <a href="${url}" target="_blank">${url}</a></p></div>`;
-        }
-
-        // Get user ID (for likes)
-        function getUserId() {
-            return localStorage.getItem('userId') || 'anonymous_' + Math.random().toString(36).substr(2, 9);
-        }
-
-        // Initialize user ID
-        if (!localStorage.getItem('userId')) {
-            localStorage.setItem('userId', 'user_' + Math.random().toString(36).substr(2, 9));
-        }
-
-        // Toggle like
-        function toggleLike(newsId) {
-            const userId = getUserId();
-            let allNews = JSON.parse(localStorage.getItem('news') || '[]');
-            
-            const newsIndex = allNews.findIndex(news => news.id === newsId);
-            if (newsIndex === -1) return;
-
-            const news = allNews[newsIndex];
-            
-            if (!news.likedBy) news.likedBy = [];
-            
-            if (news.likedBy.includes(userId)) {
-                // Remove like
-                news.likedBy = news.likedBy.filter(id => id !== userId);
-                news.likes = Math.max(0, news.likes - 1);
-            } else {
-                // Add like
-                news.likedBy.push(userId);
-                news.likes = (news.likes || 0) + 1;
-            }
-
-            localStorage.setItem('news', JSON.stringify(allNews));
-            loadNews();
-            updateStats();
-            if (currentUser) updateUserStats();
-        }
-
-        // Handle filter
-        function handleFilter(e) {
-            const filter = e.target.dataset.filter;
-            currentFilter = filter;
-
-            // Update active filter
-            document.querySelectorAll('[data-filter]').forEach(tag => {
-                tag.classList.remove('active');
-            });
-            e.target.classList.add('active');
-
-            loadNews();
-        }
-
-        // Set view mode
-        function setView(view) {
-            currentView = view;
-            const newsGrid = document.getElementById('newsGrid');
-            const gridBtn = document.getElementById('gridView');
-            const listBtn = document.getElementById('listView');
-
-            if (view === 'grid') {
-                newsGrid.classList.remove('list-view');
-                gridBtn.classList.remove('btn-secondary');
-                listBtn.classList.add('btn-secondary');
-            } else {
-                newsGrid.classList.add('list-view');
-                listBtn.classList.remove('btn-secondary');
-                gridBtn.classList.add('btn-secondary');
-            }
-
-            // Update news cards
-            document.querySelectorAll('.news-card').forEach(card => {
-                if (view === 'list') {
-                    card.classList.add('list-view');
-                } else {
-                    card.classList.remove('list-view');
-                }
-            });
-        }
-
-        // Update statistics
-        function updateStats() {
-            const allNews = JSON.parse(localStorage.getItem('news') || '[]');
-            const totalNews = allNews.length;
-            const totalLikes = allNews.reduce((sum, news) => sum + (news.likes || 0), 0);
-            const activeJournalists = JSON.parse(localStorage.getItem('activeJournalists') || '[]').length;
-
-            // Update about page stats
-            document.getElementById('totalNews').textContent = totalNews;
-            document.getElementById('totalLikes').textContent = totalLikes;
-            document.getElementById('activeJournalists').textContent = activeJournalists;
-
-            // Update footer stats
-            const footerStats = document.getElementById('footerStats');
-            footerStats.innerHTML = `
-                <span class="footer-stat">Новин: <strong>${totalNews}</strong></span>
-                <span class="footer-stat">Лайків: <strong>${totalLikes}</strong></span>
-                <span class="footer-stat">Журналістів: <strong>${activeJournalists}</strong></span>
-            `;
-        }
-
-        // Update leaderboard
-        function updateLeaderboard() {
-            const allNews = JSON.parse(localStorage.getItem('news') || '[]');
-            const activeJournalists = JSON.parse(localStorage.getItem('activeJournalists') || '[]');
-            
-            const journalistStats = {};
-
-            // Calculate stats for each journalist
-            activeJournalists.forEach(journalist => {
-                const journalistNews = allNews.filter(news => news.author === journalist);
-                const totalLikes = journalistNews.reduce((sum, news) => sum + (news.likes || 0), 0);
-                
-                journalistStats[journalist] = {
-                    posts: journalistNews.length,
-                    likes: totalLikes,
-                    avgLikes: journalistNews.length > 0 ? (totalLikes / journalistNews.length).toFixed(1) : 0
-                };
-            });
-
-            // Sort by total likes
-            const sortedJournalists = Object.entries(journalistStats)
-                .sort(([,a], [,b]) => b.likes - a.likes);
-
-            const leaderboard = document.getElementById('leaderboard');
-            
-            if (sortedJournalists.length === 0) {
-                leaderboard.innerHTML = '<p style="text-align: center; color: #666;">Поки немає активних журналістів</p>';
-                return;
-            }
-
-            leaderboard.innerHTML = sortedJournalists.map(([journalist, stats], index) => `
-                <div class="leader-item">
-                    <span class="leader-rank">#${index + 1}</span>
-                    <span class="leader-name">${journalist}</span>
-                    <div class="leader-stats">
-                        <div>Публікацій: ${stats.posts}</div>
-                        <div>Лайків: ${stats.likes}</div>
-                        <div>Середньо: ${stats.avgLikes}</div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Set initial user ID if not exists
-        if (!localStorage.getItem('userId')) {
-            localStorage.setItem('userId', 'user_' + Date.now());
-        }
-
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyC8k9JKNHtDiqxRDG265dXvPR5_dJgMgOk",
-  authDomain: "zmi-media.firebaseapp.com",
-  projectId: "zmi-media",
-  storageBucket: "zmi-media.firebasestorage.app",
-  messagingSenderId: "335383172667",
-  appId: "1:335383172667:web:5526cc26618a685b012e1e"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+        const leaderboard = document.getElementById('leaderboard');
         
-    </script>
+        if (sortedJournalists.length === 0) {
+            leaderboard.innerHTML = '<p style="text-align: center; color: #666;">Поки немає активних журналістів</p>';
+            return;
+        }
+
+        leaderboard.innerHTML = sortedJournalists.map(([journalist, stats], index) => `
+            <div class="leader-item">
+                <span class="leader-rank">#${index + 1}</span>
+                <span class="leader-name">${journalist}</span>
+                <div class="leader-stats">
+                    <div>Публікацій: ${stats.posts}</div>
+                    <div>Лайків: ${stats.likes}</div>
+                    <div>Середньо: ${stats.avgLikes}</div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Запускаємо оновлення після завантаження сторінки
+    updateStats();
+    updateLeaderboard();
+</script>
+
 </body>
 </html>
