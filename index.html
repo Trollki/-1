@@ -2,69 +2,172 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ЗМІ 1+1 — Новини</title>
   <style>
+    /* Скидання і базові стилі */
+    * {
+      box-sizing: border-box;
+    }
     body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background: #f0f0f0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f7f9fc;
       color: #333;
+      margin: 0;
+      padding: 0 15px 40px;
       max-width: 900px;
       margin-left: auto;
       margin-right: auto;
+      line-height: 1.6;
     }
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      background-color: #004085;
+      padding: 15px 20px;
+      color: white;
+      border-radius: 0 0 10px 10px;
       margin-bottom: 30px;
-      border-bottom: 2px solid #007BFF;
-      padding-bottom: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
     header .logo {
-      font-weight: bold;
-      font-size: 1.8em;
-      color: #007BFF;
+      font-weight: 900;
+      font-size: 1.9em;
+      letter-spacing: 1.2px;
+      cursor: default;
+      user-select: none;
     }
     nav a {
+      color: #a8c7ff;
       text-decoration: none;
-      margin-left: 20px;
+      margin-left: 25px;
       font-weight: 600;
-      color: #007BFF;
+      font-size: 1.1em;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background-color 0.25s ease, color 0.25s ease;
       cursor: pointer;
+      user-select: none;
+    }
+    nav a:hover {
+      background-color: #2a69ac;
+      color: #fff;
     }
     nav a.active {
-      text-decoration: underline;
+      background-color: #fcd535;
+      color: #004085;
+      font-weight: 700;
+      box-shadow: 0 0 8px #fcd535aa;
+    }
+
+    /* Новини */
+    #newsContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
     }
     .news-item {
       background: white;
-      padding: 15px 20px;
-      border-radius: 8px;
-      margin-bottom: 25px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 20px 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgb(0 0 0 / 0.07);
+      transition: transform 0.15s ease;
+    }
+    .news-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgb(0 0 0 / 0.12);
     }
     .news-title {
-      font-size: 1.4em;
-      margin-bottom: 8px;
-      color: #004085;
+      font-size: 1.55em;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #002752;
     }
     .news-date {
       font-size: 0.9em;
       color: #6c757d;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
+      font-style: italic;
     }
     .news-text {
-      margin-bottom: 10px;
-      line-height: 1.5;
+      font-size: 1.1em;
+      margin-bottom: 16px;
       white-space: pre-line;
+      color: #222;
     }
     img, video, iframe {
-      max-width: 100%;
-      border-radius: 6px;
-      margin-bottom: 15px;
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      max-height: 400px;
+      object-fit: cover;
     }
+
+    /* Сторінка "Про нас" */
     #aboutPage {
       display: none;
+      background: white;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgb(0 0 0 / 0.08);
+      line-height: 1.7;
+    }
+    #aboutPage h1 {
+      font-size: 2.2em;
+      margin-bottom: 15px;
+      color: #003366;
+      border-bottom: 3px solid #fcd535;
+      padding-bottom: 8px;
+      font-weight: 800;
+    }
+    #aboutPage p {
+      font-size: 1.1em;
+      margin-bottom: 20px;
+      color: #444;
+    }
+    #aboutPage .highlight {
+      background: #fcd535;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-weight: 700;
+      color: #004085;
+      display: inline-block;
+      margin-bottom: 20px;
+      box-shadow: 0 0 12px #fcd535aa;
+    }
+
+    /* Адаптивність */
+    @media (max-width: 600px) {
+      body {
+        padding: 0 10px 30px;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      nav a {
+        margin-left: 0;
+        margin-right: 15px;
+        font-size: 1em;
+        padding: 8px 14px;
+      }
+      .news-item {
+        padding: 15px 18px;
+      }
+      .news-title {
+        font-size: 1.3em;
+      }
+      #aboutPage h1 {
+        font-size: 1.8em;
+      }
+      #aboutPage p {
+        font-size: 1em;
+      }
     }
   </style>
 </head>
@@ -86,9 +189,13 @@
 <!-- Про нас -->
 <div id="aboutPage">
   <h1>Про нас</h1>
-  <p>ЗМІ 1+1 — це незалежне новинне медіа, яке прагне надавати вам найсвіжішу та найоб’єктивнішу інформацію.</p>
-  <p>Наш сайт працює у демо-режимі, усі новини додаються вручну в коді.</p>
-  <p>Дякуємо, що читаєте нас!</p>
+  <p><span class="highlight">ЗМІ 1+1</span> — це офіційне державне інформаційне агентство України, яке надає громадянам достовірні, перевірені та оперативні новини. Ми працюємо за стандартами журналістської етики та прагнемо бути голосом правди для нашої країни.</p>
+  
+  <p>Наша місія — інформувати українців про важливі події, підтримувати національну єдність і сприяти розвитку демократичного суспільства. Ми зібрали команду досвідчених журналістів, які працюють у різних куточках України та світу, щоб донести вам найсвіжішу та найактуальнішу інформацію.</p>
+  
+  <p>Сайт працює в демо-режимі, тому всі новини додаються вручну в коді, а інформація не зберігається постійно. Ми раді вашим відгукам та пропозиціям.</p>
+  
+  <p><strong>Активних журналістів сьогодні:</strong> <span id="journalistCount">0</span></p>
 </div>
 
 <script>
@@ -112,7 +219,11 @@
     }
   ];
 
+  // Для демонстрації - кількість активних журналістів можна підрахувати (наприклад, у демо поки 5)
+  const activeJournalists = 5;
+
   const newsContainer = document.getElementById('newsContainer');
+  const journalistCountElem = document.getElementById('journalistCount');
 
   function renderNews() {
     newsContainer.innerHTML = '';
@@ -141,7 +252,6 @@
     });
   }
 
-  // Функція для безпечного виводу тексту (щоб не було XSS)
   function escapeHtml(text) {
     if (!text) return "";
     return text
@@ -173,6 +283,9 @@
     linkAbout.classList.add('active');
     linkHome.classList.remove('active');
   });
+
+  // Виводимо кількість журналістів
+  journalistCountElem.textContent = activeJournalists;
 
   renderNews();
 </script>
