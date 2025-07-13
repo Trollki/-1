@@ -201,6 +201,14 @@
 </head>
 <body>
 
+<header>
+  <div class="logo">ЗМІ 1+1</div>
+  <nav>
+    <a href="#" id="linkHome" class="active">Головна</a>
+    <a href="#" id="linkAbout">Про нас</a>
+  </nav>
+</header>
+
 <!-- Головна сторінка -->
 <div id="homePage">
   <div id="newsContainer"></div>
@@ -225,63 +233,116 @@
 </div>
 
 <script>
-  // Дані новин
+  // Дані новин (оновлені, при потребі можна доповнити)
   const newsData = [
     {
       title: "ЗСУ відбили напад на Лисичанськ: деталі",
       date: "2023-05-17",
-      text: `Збройні сили України успішно відбили спробу прориву ворога у напрямку Лисичанська. У боях загинули понад 15 окупантів, наші воїни понесли незначні втрати. Позиції міцно утримуються, противник зазнає значних втрат у техніці.\n\nКомандування підкреслює важливість цієї перемоги для подальшого звільнення окупованих територій.`
+      text: `Збройні сили України успішно відбили спробу прориву ворога у напрямку Лисичанська. У боях загинули понад 15 окупантів, наші воїни понесли незначні втрати. Позиції міцно утримуються, противник зазнає значних втрат у техніці.\n\nКомандування підкреслює важливість цієї перемоги для подальшого звільнення Донбасу.`,
+      media: {
+        type: "image",
+        src: "https://upload.wikimedia.org/wikipedia/commons/e/e2/UA_flag_Bucha_2.jpg",
+        alt: "Прапор України на фронті"
+      }
     },
     {
-      title: "Україна отримає нову військову допомогу від союзників",
-      date: "2023-05-18",
-      text: `Міністр оборони України повідомив, що найближчими тижнями країна отримає черговий пакет допомоги, який включатиме артилерію, дрони та бронетехніку.\n\nЦе стане суттєвим підсиленням ЗСУ на ключових напрямках фронту.`
+      title: "Путін наказав вивезти цінне обладнання з заводу в Харкові",
+      date: "2023-05-20",
+      text: `Російське командування здійснило спробу евакуації стратегічного обладнання з заводу "Електромаш" у Харкові. Частину техніки було вивезено, проте більшість залишилась завдяки оперативності СБУ та місцевих партизан.\n\nЦей випадок свідчить про постійний тиск на українську промисловість з боку агресора.`,
+      media: {
+        type: "video",
+        src: "https://www.w3schools.com/html/mov_bbb.mp4"
+      }
     },
     {
-      title: "Курс гривні стабілізувався — НБУ",
-      date: "2023-05-19",
-      text: `Національний банк України повідомляє про стабілізацію курсу гривні на міжбанківському ринку. В останні дні відзначається зростання довіри до фінансової системи.\n\nЕксперти пов’язують це із поступовим зростанням економіки та підтримкою міжнародних партнерів.`
+      title: "Новий закон про кібербезпеку в Україні: що зміниться",
+      date: "2023-05-25",
+      text: `Верховна Рада ухвалила закон, який посилює захист державних інформаційних систем та критичної інфраструктури від кібератак. Закон передбачає жорсткі санкції для порушників та створення спеціального центру реагування.\n\nЕксперти відзначають, що це важливий крок для зміцнення нацбезпеки у цифрову епоху.`,
+      media: null
     }
   ];
 
-  // Вивід новин
+  const newsContainer = document.getElementById('newsContainer');
+  const homePage = document.getElementById('homePage');
+  const aboutPage = document.getElementById('aboutPage');
+
+  // Функція для створення новинних блоків
   function renderNews() {
-    const container = document.getElementById('newsContainer');
-    container.innerHTML = '';
+    newsContainer.innerHTML = '';
+    newsData.forEach(news => {
+      const newsEl = document.createElement('article');
+      newsEl.classList.add('news-item');
 
-    newsData.forEach(item => {
-      const newsEl = document.createElement('div');
-      newsEl.className = 'news-item';
+      const title = document.createElement('h2');
+      title.className = 'news-title';
+      title.textContent = news.title;
 
-      newsEl.innerHTML = `
-        <div class="news-title">${item.title}</div>
-        <div class="news-date">${item.date}</div>
-        <div class="news-text">${item.text}</div>
-      `;
+      const date = document.createElement('div');
+      date.className = 'news-date';
+      date.textContent = new Date(news.date).toLocaleDateString('uk-UA', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
 
-      container.appendChild(newsEl);
+      const text = document.createElement('p');
+      text.className = 'news-text';
+      text.textContent = news.text;
+
+      newsEl.appendChild(title);
+      newsEl.appendChild(date);
+      newsEl.appendChild(text);
+
+      if (news.media) {
+        if (news.media.type === 'image') {
+          const img = document.createElement('img');
+          img.src = news.media.src;
+          img.alt = news.media.alt || 'Новина';
+          newsEl.appendChild(img);
+        } else if (news.media.type === 'video') {
+          const video = document.createElement('video');
+          video.controls = true;
+          video.src = news.media.src;
+          newsEl.appendChild(video);
+        }
+      }
+
+      newsContainer.appendChild(newsEl);
     });
   }
 
-  // Перемикання сторінок
-  document.getElementById('linkHome').addEventListener('click', (e) => {
+  renderNews();
+
+  // Навігація
+  const linkHome = document.getElementById('linkHome');
+  const linkAbout = document.getElementById('linkAbout');
+
+  function showHome() {
+    homePage.style.display = 'block';
+    aboutPage.style.display = 'none';
+    linkHome.classList.add('active');
+    linkAbout.classList.remove('active');
+  }
+
+  function showAbout() {
+    homePage.style.display = 'none';
+    aboutPage.style.display = 'block';
+    linkHome.classList.remove('active');
+    linkAbout.classList.add('active');
+  }
+
+  linkHome.addEventListener('click', e => {
     e.preventDefault();
-    document.getElementById('homePage').style.display = 'block';
-    document.getElementById('aboutPage').style.display = 'none';
-    document.getElementById('linkHome').classList.add('active');
-    document.getElementById('linkAbout').classList.remove('active');
+    showHome();
   });
 
-  document.getElementById('linkAbout').addEventListener('click', (e) => {
+  linkAbout.addEventListener('click', e => {
     e.preventDefault();
-    document.getElementById('homePage').style.display = 'none';
-    document.getElementById('aboutPage').style.display = 'block';
-    document.getElementById('linkHome').classList.remove('active');
-    document.getElementById('linkAbout').classList.add('active');
+    showAbout();
   });
 
-  // Завантаження новин при старті
-  window.addEventListener('DOMContentLoaded', renderNews);
+  // За замовчуванням показати головну сторінку
+  showHome();
 </script>
 
 </body>
