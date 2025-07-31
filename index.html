@@ -532,6 +532,17 @@
         type: "video",
         src: "https://www.youtube.com/embed/CzxjgmukVhE"
       }
+    },
+    {
+      id: 'news7',
+      title: "ДКВС проти ВРУ. Частина 2: Союз із ВРУ",
+      date: "2025-07-31T14:51:00Z",
+      tags: ["Фільми"],
+      text: "У попередній частині заступник Голови Верховної Ради зник безвісти після конфлікту з ДКВС. Тепер події набирають нових обертів…",
+      media: {
+        type: "video",
+        src: "https://www.youtube.com/embed/qMCt-LQm6vw"
+      }
     }
   ];
 
@@ -777,6 +788,9 @@
     e.preventDefault();
     showLoader();
     showAbout();
+    if (!isRestrictedContext) {
+      history.pushState({}, '', window.location.pathname);
+    }
   });
 
   // Пошук
